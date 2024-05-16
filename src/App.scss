@@ -1,0 +1,54 @@
+.App{
+	height:100%;
+    position:relative;
+    overflow: hidden;
+    
+
+    .stage{
+        position:absolute;
+        top:70%;
+        left:50%;
+        transition: all 0.3s ease-out;
+        will-change: transform;
+        perspective: 2000px;
+        transform-style: preserve-3d;
+        z-index:3;
+    }
+    .sky{
+        position:absolute;
+        left:50%;
+        width:100%;
+        min-width:1400px;
+        z-index:2;
+        background-repeat: no-repeat;
+        transform:translate(-50%,0);
+        background-size: 105% 100%;
+        transition:all 0.3s ease-out;
+    }
+    .ground{
+        z-index:1;
+        
+        position:absolute;
+        width:100%;
+        min-width:1400px;
+        left:50%;
+        transform:translate(-50%,0);
+        background-position: top center;
+        background-repeat: no-repeat;
+        background-size: 105% 100%;
+        transition:all 0.3s ease-out;
+    }
+}
+
+h1{
+    font-size:28px;
+    span{
+        font-size:16px;
+        display:block;
+        margin-bottom:4px;
+    }
+}
+
+h3{
+    font-weight:600;
+}

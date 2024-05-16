@@ -1,0 +1,28 @@
+.sectionBox{
+    .boxContent{
+        display:flex;
+        flex-direction: row;
+    }
+    &.verCenter{
+        .boxContent{
+            align-items: center;
+        }
+    }
+    &.horCenter{
+        .boxContent{
+            justify-content: center;
+        }
+    }
+    &.padding{
+        .boxContent{
+            padding:20px;
+            p{
+                line-height: 28px;
+                font-size:18px;
+                a{
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}

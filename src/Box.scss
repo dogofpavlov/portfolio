@@ -1,0 +1,42 @@
+
+$boxTransition:all 0.5s ease-in-out;
+
+.box{
+    position:absolute;
+    top:0;
+    left:0;
+    transition: $boxTransition;
+    transform-style: preserve-3d;
+    will-change:transform;
+    .boxBorder{
+        border-style:solid;
+        border-image-slice: 26;
+        border-image-repeat: stretch;
+        display:flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: stretch;
+        transition: $boxTransition;
+        will-change:transform;
+        overflow: hidden;
+        .boxColor{
+            flex-grow: 1;
+        }
+    }
+    .boxContent{
+        height:100%;
+    }
+    .boxShadow{
+        position:absolute;
+        top:100%;
+        left:-10%;
+        width:120%;
+        height:40px;
+        background-color: transparent;
+        transition: $boxTransition;
+        background-size: 100% 100%;
+        z-index:-999;
+        will-change:transform;
+        opacity:1;
+    }
+}

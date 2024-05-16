@@ -1,0 +1,28 @@
+.changeTheme{
+    .boxContent{
+        display:flex;
+        flex-direction: row;
+    }
+    .btnChangeTheme{
+        cursor: pointer;
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        font-weight: 600;
+        flex-shrink: 0;
+        padding:0 15px;
+        border-right:1px solid rgba(255,255,255,0.1);
+
+        
+    }
+    .themeOption{
+        padding:0 15px;
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        font-weight: 700;
+        transition:all 0.3s;
+    }
+}
