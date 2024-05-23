@@ -1,0 +1,42 @@
+.input{
+    .inputElement{
+        width:100%;
+        height:60px;
+        outline:none;
+        border:1px solid rgba(255,255,255,0.2);
+        transition:all 0.2s;
+        padding:0 20px;
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        line-height: normal;
+        &:focus{
+            border:1px solid var(--theme-color) !important;
+        }
+    }
+    
+    textarea{
+        &.inputElement{
+            resize:none;
+            padding-top:20px;
+        }
+    }
+    input,textarea{
+        color:#FFF;
+        background-color:#000;
+        font-size:16px;
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+    }
+    button{
+
+    }
+    &.error{
+        .inputElement{
+            border:1px solid #FF0000;
+
+        }
+    }
+}

@@ -1,8 +1,7 @@
-import {useEffect} from 'react';
 import Box from './Box';
-import { SectionFunction } from './types/Section';
 import { IDepthInfo, useDepth } from './hooks/useDepth';
 import './SectionBox.scss';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 export interface ISectionBoxProps extends React.PropsWithChildren{
@@ -20,31 +19,38 @@ export interface ISectionBoxProps extends React.PropsWithChildren{
     verCenter?:boolean;
     horCenter?:boolean;
     padding?:boolean;
-    overflowHidden?:boolean;
+    overflowScroll?:boolean;
+    disableDepthClick?:boolean;
+    noStyle?:boolean;
+    outerChildren?:React.ReactNode;
+    anchorBottom?:boolean;
 }
 
 export default function SectionBox (props: ISectionBoxProps) {
-    const {depth, isActive} = props.depthInfo;
+    const {depth, isActive, isDepthCurrent, sectionPath} = props.depthInfo;
 
+    let navigate = useNavigate();
 
-   // const introProgress = useNumAnimation({start:0, end:1, duration:10, isActive});
+    let isVisible = isActive;
+    if(depth<0){
+        isVisible=false;
+    }
 
-    let numWidth = isActive?props.width:20;
-    let numHeight = isActive?props.height:0;
+    let numWidth = isVisible?props.width:20;
+    let numHeight = isVisible?props.height:0;
 
     let numX:number=props.x;
-    let numY:number=isActive?props.y:0;
+    let numY:number=isVisible?props.y:0;
     let numZ:number=-(depth)*250;
     if(props.zOffset){
         numZ+=props.zOffset;
     }
 
-    let opacity:number = 1 - (numZ/-500);
-    if(!isActive){
+    let opacity:number = 1 - (numZ/-650);
+    if(!isVisible){
         opacity=0;
     }
     if(opacity>1)opacity=1;
-   // console.log(props.className, introProgress);
 
     let cn:string = "sectionBox";
     if(props.className){
@@ -60,10 +66,21 @@ export default function SectionBox (props: ISectionBoxProps) {
         cn+=" padding";
     }
 
-    let contentOpacity:number = depth===0?1:opacity*.5;
-
-
+    let contentOpacity:number = depth===0?1:opacity;
     
+    
+
+    let onClick = props.onClick;
+    if(!isDepthCurrent){
+        if(!props.disableDepthClick){
+            onClick = ()=>{
+                navigate(sectionPath);
+            }
+        }
+    }
+    if(opacity===0){
+        onClick = undefined;
+    }
 
     return (
         <Box 
@@ -78,8 +95,11 @@ export default function SectionBox (props: ISectionBoxProps) {
             x={numX} 
             y={numY} 
             z={numZ} 
-            overflowHidden={props.overflowHidden}
-            onClick={props.onClick}
+            overflowScroll={props.overflowScroll}
+            onClick={onClick}
+            noStyle={props.noStyle}
+            outerChildren={props.outerChildren}
+            anchorBottom={props.anchorBottom}
         >
             {props.children}
         </Box>

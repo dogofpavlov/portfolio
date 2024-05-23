@@ -7,6 +7,9 @@ import './Navigation.scss';
 import Skills from '../sections/Skills';
 import Projects from '../sections/Projects';
 import Contact from '../sections/Contact';
+import { useDepthPath } from '../hooks/useDepth';
+import useStageSize from '../context/StageSizeContext';
+import Links from '../sections/Links';
 
 export interface INavigationProps {
     ready:boolean;
@@ -14,10 +17,17 @@ export interface INavigationProps {
 
 export default function Navigation (props: INavigationProps) {
 
-    const width = props.ready?600:50;
+    const width = props.ready?650:50;
     const height = props.ready?70:0;
-    const x = 300;
+
+    const {rightX} = useStageSize();
+
+    const x = rightX-(width/2);
     const y = props.ready?400:0;
+
+    const {activeDepth} = useDepthPath();
+
+    const zOffset = activeDepth===3?-10:50;
 
     return (
         
@@ -32,15 +42,15 @@ export default function Navigation (props: INavigationProps) {
             width={width} 
             x={x} 
             y={y} 
-            z={50}
+            z={zOffset}
         >
                 
             <NavLink to={Home.PATH}>Home</NavLink>
             <NavLink to={About.PATH}>About</NavLink>
             <NavLink to={Projects.PATH}>Projects</NavLink>
-            <NavLink to={Skills.PATH}>Skills</NavLink>
             <NavLink to={Contact.PATH}>Contact</NavLink>
-            <NavLink to={About.PATH}>Links</NavLink>
+            <NavLink to={Links.PATH}>Links</NavLink>
+            <NavLink to={"http://ryancaillouet.com/my-resume.pdf"} target='_blank'>My Resume</NavLink>
         </Box>
     );
 }

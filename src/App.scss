@@ -6,7 +6,6 @@
 
     .stage{
         position:absolute;
-        top:70%;
         left:50%;
         transition: all 0.3s ease-out;
         will-change: transform;
@@ -48,7 +47,31 @@ h1{
         margin-bottom:4px;
     }
 }
-
+h2{
+    font-size:24px;
+    font-weight: 600;
+}
 h3{
     font-weight:600;
+}
+
+
+.themeBtn{
+    cursor: pointer;
+    transition:all 0.2s;
+    height:60px;
+    background-color:var(--theme-color);
+    color:#000;
+    border:1px solid rgba(0,0,0,0.5);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size:20px;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding:0 20px;
+    &:focus, &:hover{
+        border:8px solid rgba(0,0,0,0.5);
+    }
 }

@@ -1,9 +1,11 @@
 
 import useMousePosition from './hooks/useMousePosition';
 import { useTheme } from './context/ThemeContext';
-import { useEffect, useState } from 'react';
-import preloadImage from './util/PreloadImage';
+
 import PinholeReveal from './ui/PinholeReveal';
+import { StageSizeProvider } from './context/StageSizeContext';
+import useWorldControl from './context/WorldControlContext';
+
 
 export interface IWorldProps extends React.PropsWithChildren{
 
@@ -11,15 +13,21 @@ export interface IWorldProps extends React.PropsWithChildren{
 
 export default function World (props: IWorldProps) {
 
+    const {isViewingDetail, stageTop} = useWorldControl();
 
 
     const mousePosition = useMousePosition();
-    const rotationX = 5*mousePosition.y-8;
-    const rotationY = 10*mousePosition.x;
-    const skyPositionX = 50+mousePosition.x*50;
-    const worldRotation = -mousePosition.x*0.5;
+
+    const mouseX = isViewingDetail?0:mousePosition.x;
+    const mouseY = isViewingDetail?0:mousePosition.y;
+
+
+    const rotationX = isViewingDetail?0:(5*mouseY-8);
+    const rotationY = 10*mouseX;
+    const skyPositionX = 50+mouseX*50;
+    const worldRotation = -mouseX*0.5;
     const worldVerticalBuffer = 10;
-    const verticalMovement = 2*mousePosition.y;
+    const verticalMovement = 2*mouseY;
 
     const skyHeight = 53.62;
     const skyTop = -worldVerticalBuffer+verticalMovement;
@@ -27,14 +35,11 @@ export default function World (props: IWorldProps) {
     const groundTop = skyHeight+verticalMovement;
     const groundPercent = 100-skyPercent+worldVerticalBuffer+(worldVerticalBuffer/2)-verticalMovement;
 
-    const {theme, isPinholeOpen} = useTheme();
-
-
-
+    const {theme} = useTheme();
 
 
     return (
-        <>
+        <StageSizeProvider>
             <div className='App' style={{backgroundColor:theme.bgColor}}>
                 <div className="sky" style={{
                     backgroundImage:`url('./theme/${theme.id}/sky.jpg')`, 
@@ -52,16 +57,13 @@ export default function World (props: IWorldProps) {
                     height:`${groundPercent}%`
                 }}/>
                 <div className="stage" style={{
+                    top:`${stageTop}%`,
                     transform:`rotateX(${rotationX}deg) rotateY(${rotationY}deg)`,
                 }}>
                     {props.children}
                 </div>
             </div>
-            <PinholeReveal open={isPinholeOpen}>
-                <div className="themeLoading">
-                    Loading Please Wait...
-                </div>
-            </PinholeReveal>
-        </>
+            <PinholeReveal/>
+        </StageSizeProvider>
     );
 }

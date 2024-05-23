@@ -1,4 +1,4 @@
-const preloadImage = async ($src: string, $onProgress?: ($progress: number) => void): Promise<void> => {
+const PreloadImage = async ($src: string, $onProgress?: ($progress: number) => void): Promise<void> => {
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', $src, true);
@@ -34,6 +34,6 @@ const preloadImage = async ($src: string, $onProgress?: ($progress: number) => v
 };
   
 
-export default preloadImage;
+export default PreloadImage;
 
 

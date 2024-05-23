@@ -39,4 +39,9 @@ $boxTransition:all 0.5s ease-in-out;
         will-change:transform;
         opacity:1;
     }
+    &.overflowScroll{
+        .boxContent{
+            overflow-y:auto;
+        }
+    }
 }

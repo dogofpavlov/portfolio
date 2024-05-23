@@ -1,0 +1,47 @@
+.projectClass{
+    .boxContent{
+
+        a{
+            font-size:30px;
+            font-weight: 700;
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color:#FFFFFF;
+            text-decoration: none;
+            flex-grow: 1;
+            transition:all 0.2s;
+            .tintIcon{
+                width:80px;
+                height:80px;                
+                background-color: #FFFFFF;
+                margin-bottom:20px;
+            }
+            &:hover{
+                .pushHoverText{
+                    .pushHoverInside{
+                        transform:translate(0,100%);
+                    }
+                }
+                .tintIcon{
+                    background-color: var(--theme-color);
+                }
+                transform: scale(1.1);
+            }
+        }
+    }
+    &.selected{
+        .boxContent{
+            a{
+                .pushHoverTextInside{
+                    transform:translate(0,100%);
+                }
+                .tintIcon{
+                    background-color: var(--theme-color);
+                }
+                transform: scale(1.1);
+            }
+        }
+    }
+}

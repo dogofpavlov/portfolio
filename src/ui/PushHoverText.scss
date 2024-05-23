@@ -1,0 +1,12 @@
+.pushHoverText{
+    .pushHoverInside{
+    
+        .colored{
+            color:var(--theme-color);
+            position:absolute;
+            top:0;
+            left:0;
+            transform:translate(0,-100%);
+        }
+    }
+}

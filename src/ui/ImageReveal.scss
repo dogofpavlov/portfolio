@@ -1,0 +1,98 @@
+
+
+@keyframes imageRevealLeft{
+    0% {
+        clip-path: inset(0 0 0 100%);
+    }
+    100% {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+
+@keyframes imageRevealRight{
+    0% {
+        clip-path: inset(0 100% 0 0);
+    }
+    100% {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+.imageReveal{
+    position:relative;
+    font-size:0;
+    overflow:hidden;
+    margin-top:-0.5px;//remove weird line that appears because of clip-path
+    
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
+    
+    &.left{
+        animation-name:imageRevealLeft;
+    }
+    &.right{
+        animation-name:imageRevealRight;
+    }
+}
+
+
+/*
+
+
+@keyframes imageRevealLeft{
+    0%{
+        transform:translate(0,0);
+    }
+    100%{
+        transform:translate(-100%,0);
+    }
+}
+
+
+@keyframes imageRevealRight{
+    0%{
+        transform:translate(0,0);
+    }
+    100%{
+        transform:translate(100%,0);
+    }
+}
+
+.imageReveal{
+    position:relative;
+    font-size:0;
+    overflow:hidden;
+    .cover{
+        content:"";
+        display:block;
+        background-color:#000000;
+        position:absolute;
+        top:0;
+        width:100%;
+        height:100%;
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+        animation-iteration-count: 1;
+        animation-fill-mode: both;
+
+    }
+    &.left{
+        .cover{
+            animation-name:imageRevealLeft;
+            left:0;
+        }
+
+    }
+    &.right{
+        .cover{
+            animation-name:imageRevealRight;
+            right:0;
+        }
+    }
+}
+
+
+*/

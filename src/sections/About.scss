@@ -1,0 +1,9 @@
+.aboutBox{
+    .boxContent{
+        align-items: flex-start;
+        a{
+            text-decoration: underline !important;
+            color:var(--theme-color) !important;
+        }
+    }
+}

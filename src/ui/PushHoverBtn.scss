@@ -1,0 +1,38 @@
+.pushHoverBtn{
+    .pushHoverInside{
+
+        transition:none;
+        .push{
+            position:absolute;
+            top:0;
+            left:0;
+        }
+    }
+    &.left{
+        .push{
+            transform:translate(100%,0);
+        }
+    }
+    &.right{
+        .push{
+            transform:translate(-100%,0);
+        }
+    }
+    &:hover{
+        .pushHoverInside{
+            transition:all 0.3s;
+        }
+        &.left{
+            .pushHoverInside{
+                transform:translate(-100%,0);
+
+            }
+        }
+        &.right{
+            .pushHoverInside{
+                transform:translate(100%,0);
+            }
+        }
+    }
+
+}

@@ -55,6 +55,7 @@ html {
 }
 html, body, #root{
 	height:100%;
+	overflow: hidden;
 }
 
 *, *:before, *:after {
@@ -77,4 +78,5 @@ body{
 
 .theme{
 	color:var(--theme-color);
+	font-weight: 600;
 }

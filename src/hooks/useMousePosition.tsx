@@ -1,4 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+import { gsap } from "gsap/gsap-core";
+import isMobile from "../util/IsMobile";
+import MathUtil from "../util/MathUtil";
 
 type MousePosition = {
     x: number;
@@ -11,6 +15,9 @@ type MousePosition = {
  */
 function useMousePosition(): MousePosition {
     const [position, setPosition] = useState<MousePosition>({ x: 0, y: 0 });
+    const refPosition = useRef<MousePosition>({x:0, y:0});
+
+    const tweenRef = useRef<gsap.core.Timeline | null>(null);
   
     useEffect(() => {
 
@@ -18,6 +25,12 @@ function useMousePosition(): MousePosition {
         const throttleMS = 33;
 
         const handleMove = ($event: MouseEvent | TouchEvent) => {
+
+            if(tweenRef.current){
+                tweenRef.current.kill();
+                tweenRef.current = null;
+            }
+
             const now = Date.now();
             //throttle because it's way too fast otherwise
             if(now - lastEventTime>=throttleMS){
@@ -38,16 +51,98 @@ function useMousePosition(): MousePosition {
                 const calculatedY = (clientY / innerHeight) * 2 - 1;
         
                 setPosition({ x: calculatedX, y: calculatedY });
+                refPosition.current = {x:calculatedX, y:calculatedY}
 
                 lastEventTime = now;
             }
         };
-    
+
+        const updatePositionFromTween = ($pos:{x:number, y:number})=>{
+            const now = Date.now();
+            //throttle because it's way too fast otherwise
+            if(now - lastEventTime>=33){
+
+                setPosition({ x: $pos.x, y: $pos.y });
+                lastEventTime = now;
+            }
+        }
+
+        const animatedPosition = {x:0, y:0};
+
+        const createTween = ()=>{
+            if(tweenRef.current){
+                tweenRef.current.kill();
+            }
+
+            let curX = animatedPosition.x;
+            let curY = animatedPosition.y;
+
+            let newX = (Math.random()*2)-1;
+            let newY = (Math.random()*2)-1;
+
+            const baseDistance = 2;
+            const baseDuration = 8;
+            const distance = MathUtil.calculateDistance(curX,curY, newX, newY);
+            const duration = (distance*baseDuration)/baseDistance;
+
+            tweenRef.current = gsap.timeline({onComplete:createTween})
+            .to(animatedPosition, {
+                x:newX,
+                y:newY,
+                duration,
+                onUpdate:function(){
+                    updatePositionFromTween({x:animatedPosition.x, y:animatedPosition.y});
+                },
+                ease:"linear"
+            })
+        }
+
+        createTween();
+
+
+        const restartTweenFromRefPosition = ()=>{
+            if(refPosition.current){
+                animatedPosition.x = refPosition.current.x;
+                animatedPosition.y = refPosition.current.y;
+                createTween();
+            }
+        }
+
+
+        const handleStart=()=>{
+            if(tweenRef.current){
+                tweenRef.current.kill();
+            }
+        }
+        const handleEnd=(event:MouseEvent | TouchEvent)=>{
+            if ('relatedTarget' in event && (!event.relatedTarget || (event.relatedTarget as Node).nodeName === "HTML")) {
+                restartTweenFromRefPosition();
+            }else if('touches' in event && event.touches.length === 0){
+                restartTweenFromRefPosition();
+            }
+        }
+
+
+        window.addEventListener('mouseenter', handleStart);
+        window.addEventListener('mouseout', handleEnd);
         window.addEventListener('mousemove', handleMove);
+
+        window.addEventListener('touchstart', handleStart);
+        window.addEventListener('touchend', handleEnd);
         window.addEventListener('touchmove', handleMove);
         return () => {
+
+            window.removeEventListener('mouseenter', handleStart);
+            window.removeEventListener('mouseout', handleEnd);
             window.removeEventListener('mousemove', handleMove);
+
             window.removeEventListener('touchmove', handleMove);
+            window.removeEventListener('touchstart', handleStart);
+           // window.removeEventListener('touchend', handleEnd);
+
+            if(tweenRef.current){
+                tweenRef.current.kill();
+            }
         };
     }, []);
   
