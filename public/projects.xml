@@ -1,12 +1,19 @@
 <data>
 	<projects>
 		<projectType id="apps" label="Applications">
-			<project id="safety-shield" name="Safety Shield">
+			<project id="safety-shield" name="Safety Shield" latest="true">
 				<client>Intrado</client>
-				<scope>FirstNet certified Mobile Application (iOS/Android) $amp; Web Application.</scope>
+				<scope>FirstNet certified Mobile Application (iOS/Android) &amp; Web Application.</scope>
 				<tech>HTML, SASS, Typescript, React, Cordova, Swift, JAVA</tech>
 				<desc>A comprehensive safety management platform designed primarily for schools and educational institutions to enhance emergency preparedness and response. My role as lead developer included creating a Website and Mobile application to facilitate.</desc>
 				<link>https://intradosafe.com</link>
+			</project>
+			<project id="liv" name="Laaser911 Incident Viewer" latest="true">
+				<client>Laaser911</client>
+				<scope>Mobile Friendly Web Application &amp; PWA</scope>
+				<tech>HTML, SASS, Typescript, React, Google Maps, Custom React state management.</tech>
+				<desc>A 911 safety management application designed for PSAPs (Public Safety Answering Points) to track in real time 911 emergencies and provide location accurate information for first responders.</desc>
+				<link>https://laaser911.com/liv</link>
 			</project>
 			<project id="prizm5" name="Prizm 5">
 				<client>Primz5</client>
@@ -75,7 +82,7 @@
 			</project>
 		</projectType>
 		<projectType id="web" label="Websites">
-			<project id="laaser911" name="Laaser911">
+			<project id="laaser911" name="Laaser911" latest="true">
 				<client>Laaser911</client>
 				<scope>Mobile Friendly Website</scope>
 				<tech>HTML, CSS, Javascript, Jquery, Wordpress, Photoshop, Illustrator</tech>

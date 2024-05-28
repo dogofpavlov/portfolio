@@ -1,9 +1,228 @@
+@import '../vars';
+
 .aboutBox{
     .boxContent{
-        align-items: flex-start;
+
+        .aboutBoxInside{
+            display:flex;
+            flex-direction: row;
+            transition:all 0.5s ease-in-out;
+            .aboutSectionContent{
+                width:100%;
+                flex-shrink: 0;
+                padding:20px;
+                overflow-y:auto;
+                
+                line-height: normal;
+
+
+                p{
+                    display:block;
+                    line-height: 28px;
+                    font-size:18px;
+                    color:rgba(255,255,255,0.8);
+                    .theme{
+                        opacity:1;
+                    }
+                }
+
+
+                &.sectionAboutMe{
+                    display:flex;
+                    flex-direction: row;
+                    gap:20px;
+
+                }
+                &.sectionAboutServices{
+                    display:flex;
+                    flex-direction: row;
+                    gap:20px;
+                    p{
+                        flex-grow:1;
+                        width:33%;
+                    }
+                }
+                &.sectionAboutClients{
+                    .clientLogos{
+                        display:flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        justify-content: center;
+                        padding:20px;
+                        gap:20px;
+                        img{
+                            width:120px;
+                            transition:all 0.3s;
+                            &:hover{
+                                transform:scale(1.2);
+                            }
+                        }
+                    }
+                }
+
+                @media(max-width:$resize1600){
+                    &.sectionAboutMe, &.sectionAboutServices{
+                        flex-direction: column;
+                        p{
+                            width:auto;
+                        }
+                    }
+                    &.IBelieve{
+                        br{
+                            display:none;
+                        }
+                    }
+                }
+            }
+        }
+
         a{
             text-decoration: underline !important;
             color:var(--theme-color) !important;
         }
     }
+    &.disabled3D{
+        .boxBorder{
+            margin:0 10px;
+        }
+        .boxContent{
+            .aboutBoxInside{
+                min-width: 0;
+                .aboutSectionContent{
+                    &.sectionAboutClients{
+                        .clientLogos{
+                            gap:10px;
+                            padding:20px;
+
+                            @media(max-width:$resize600){
+                                column-gap: 30px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        @media(max-width:$resize600){
+            .boxContent{
+                .aboutBoxInside{
+                    .aboutSectionContent{
+                        &.sectionAboutClients{
+                            .clientLogos{
+                                margin:0 -10px;
+                                padding:10px 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.resize400{
+            .boxContent{
+                .aboutBoxInside{}
+            }
+        }
+        .boxColor{
+            width:100%;
+        }
+    }
+}
+.aboutNav{
+    .boxContent{
+
+    }
+    .aboutNavItem{
+        flex-grow: 1;
+        padding:10px;
+        cursor: pointer;
+        font-weight: 700;
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        height:100%;
+        transition:all 0.3s;
+        position:relative;
+        &:hover{
+            background-color:var(--theme-color-hover);
+        }
+        &.selected{
+            //background-color:var(--theme-color);
+            background-image:var(--theme-bgcolor);
+            background-size: 100% 100%;
+            color:#000;
+        }
+    }
+    &.disabled3D{
+        margin:10px;
+        .aboutNavItem{
+            padding:0;
+            height:50px;
+            white-space: nowrap;
+            flex-grow:1;
+            flex-shrink: 1;
+
+        }
+
+    }
+}
+
+.aboutVideo{
+    &.disabled3D{
+        .boxBorder{
+            margin:0 10px;
+
+        }
+        .boxContent{
+            video{
+                width:100%;
+                object-fit: contain;
+            }
+        }
+    }
+}
+.doggo{
+    
+    &.disabled3D{
+        .boxBorder{
+            margin:10px;
+        }
+        &.exactActive{
+
+        
+        }
+        .boxColor{
+            background:none !important
+        }
+        .boxContent{
+            justify-content: center;
+            img{
+                width:100%;
+                max-height:200px;
+                max-width:300px;
+                object-fit: cover;
+            }
+        }
+        &.Loki{
+            width:50%;
+            float:left;
+            .boxBorder{
+                margin-right:5px;
+            }
+        }
+        &.Rocko{
+            width:50%;
+            float:left;
+            .boxBorder{
+                margin-left:5px;
+            }
+            
+            &:after{
+                content:"";
+                display:block;
+                clear:both;
+            }
+        }
+    }
+
 }

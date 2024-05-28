@@ -2,22 +2,32 @@
 	height:100%;
     position:relative;
     overflow: hidden;
-    
+    &.can3D{
 
-    .stage{
-        position:absolute;
-        left:50%;
-        transition: all 0.3s ease-out;
-        will-change: transform;
-        perspective: 2000px;
-        transform-style: preserve-3d;
-        z-index:3;
+        .stage{
+            position:absolute;
+            left:50%;
+            transition: all 0.3s ease-out;
+            will-change: transform;
+            perspective: 2000px;
+            transform-style: preserve-3d;
+            z-index:3;
+        }
     }
+    &.disabled3D{
+        .stage{
+            position:relative;
+            height:100%;
+            z-index:3;
+            overflow-y:auto;
+        }
+    }
+
     .sky{
         position:absolute;
         left:50%;
         width:100%;
-        min-width:1400px;
+        min-width:3840px;
         z-index:2;
         background-repeat: no-repeat;
         transform:translate(-50%,0);
@@ -29,7 +39,7 @@
         
         position:absolute;
         width:100%;
-        min-width:1400px;
+        min-width:3840px;
         left:50%;
         transform:translate(-50%,0);
         background-position: top center;
@@ -74,4 +84,8 @@ h3{
     &:focus, &:hover{
         border:8px solid rgba(0,0,0,0.5);
     }
+}
+.whiteSpan{
+    color:#FFF;
+    font-weight: 700;
 }

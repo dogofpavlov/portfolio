@@ -1,6 +1,8 @@
 import { PropsWithChildren, useRef } from "react";
 import './Box.scss';
 import { useTheme } from "./context/ThemeContext";
+import useStageSize from "./context/StageSizeContext";
+import useResize from "./context/ResizeContext";
 
 export interface IBoxProps extends PropsWithChildren{
     
@@ -21,17 +23,24 @@ export interface IBoxProps extends PropsWithChildren{
     noStyle?:boolean;
     outerChildren?:React.ReactNode;
     anchorBottom?:boolean;
+    allowClickWhen3DDisabled?:boolean;
 }
 
 export default function Box (props: IBoxProps) {
 
-    let cn:string = "box";
+
+    const {resizeId, disable3D} = useResize();
+
+    let cn:string = "box "+resizeId;
+
+
     if(props.className){
         cn+=" "+props.className;
     }
     if(props.overflowScroll){
         cn+=" overflowScroll";
     }
+
 
     let boxShadowY:number = props.y-10;
 
@@ -52,16 +61,16 @@ export default function Box (props: IBoxProps) {
     }
 
 
-    const boxBorderStyle:React.CSSProperties = {};
+    const extraBoxBorderStyle:React.CSSProperties = {};
     if(!props.noStyle){
-        boxBorderStyle.borderWidth = borderWidth;
-        boxBorderStyle.borderImageSource = `url('./theme/${theme.id}/boxborder.png')`
+        extraBoxBorderStyle.borderWidth = borderWidth;
+        extraBoxBorderStyle.borderImageSource = `url('./theme/${theme.id}/boxborder.png')`
     }
 
-    const boxColorStyle:React.CSSProperties = {};
+    const extraBoxColorStyle:React.CSSProperties = {};
     if(!props.noStyle){
-        boxColorStyle.backgroundColor = theme.boxColor;
-        boxColorStyle.color = theme.textColor;
+        extraBoxColorStyle.backgroundColor = theme.boxColor;
+        extraBoxColorStyle.color = theme.textColor;
     }
 
     let boxTop:number | undefined = undefined;
@@ -70,16 +79,40 @@ export default function Box (props: IBoxProps) {
         boxTop = window.innerHeight*.3;
     }
 
+    let boxStyle:React.CSSProperties = {top:boxTop, opacity:opacity, transitionDelay:delay+"s", transform:`translate(-50%,-100%) translate(${numX}px,-${numY}px) translateZ(${numZ}px)`};
+    let boxBorderStyle:React.CSSProperties = {...extraBoxBorderStyle, width:props.width, height:props.height, transitionDelay:delay+"s", cursor:props.onClick?"pointer":undefined};
+    let boxColorStyle:React.CSSProperties = {...extraBoxColorStyle, width:props.contentWidth-(borderWidth*2), height:props.contentHeight-(borderWidth*2)};
+    let boxContentStyle:React.CSSProperties = {opacity:contentOpacity};
+
+    let boxShadowStyle:React.CSSProperties = {backgroundImage:`url('./theme/${theme.id}/boxshadow.png')`, transform:`translate(0,${boxShadowY}px)`, transitionDelay:delay+"s"};
+
+    let boxBorderClick = props.onClick;
+
+    if(disable3D){
+        cn+=" disabled3D";
+        boxStyle = {};
+        boxBorderStyle = {};
+        boxColorStyle = {...extraBoxColorStyle};
+        boxContentStyle = {};
+        boxShadowStyle = {};
+        if(!props.allowClickWhen3DDisabled){
+            boxBorderClick = undefined;
+        }
+    }
+
+
     return (
-        <div className={cn} style={{top:boxTop, opacity:opacity, transitionDelay:delay+"s", transform:`translate(-50%,-100%) translate(${numX}px,-${numY}px) translateZ(${numZ}px)`}}>
-            <div className="boxBorder" style={{...boxBorderStyle, width:props.width, height:props.height, transitionDelay:delay+"s", cursor:props.onClick?"pointer":undefined}} onClick={props.onClick}>
-                <div className="boxColor" style={{...boxColorStyle, width:props.contentWidth-(borderWidth*2), height:props.contentHeight-(borderWidth*2)}}>
-                    <div className="boxContent" style={{opacity:contentOpacity}}>
+        <div className={cn} style={boxStyle}>
+            <div className="boxBorder" style={boxBorderStyle} onClick={boxBorderClick}>
+                <div className="boxColor" style={boxColorStyle}>
+                    <div className="boxContent" style={boxContentStyle}>
                         {props.children}
                     </div>
                 </div>
             </div>
-            <div className="boxShadow" style={{backgroundImage:`url('./theme/${theme.id}/boxshadow.png')`, transform:`translate(0,${boxShadowY}px)`, transitionDelay:delay+"s"}}></div>
+            {!disable3D && (
+                <div className="boxShadow" style={boxShadowStyle}></div>
+            )}
             {props.outerChildren}
         </div>
     );

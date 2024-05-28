@@ -46,7 +46,7 @@ const Projects:SectionFunction = ({ready}:IProjectsProps)=>{
 
     return (
         <>
-            <SectionBox verCenter horCenter zOffset={-20} delay={0} x={actualLeftX+100} y={400} width={200} height={60} depthInfo={depthInfo} className={Projects.ID}>
+            <SectionBox verCenter horCenter zOffset={-20} delay={0} x={actualLeftX+100} y={370} width={200} height={60} depthInfo={depthInfo} className={Projects.ID+" sectionTitle"}>
                 <h1>PROJECTS</h1>
             </SectionBox>     
             {types.map(($type,$index)=>{

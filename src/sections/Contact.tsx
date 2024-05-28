@@ -10,6 +10,7 @@ import './Contact.scss';
 import ValidationUtil from "../util/ValidationUtil";
 import Api from "../api/Api";
 import Loader from "../ui/Loader";
+import ThemeSpan from "../ui/ThemeSpan";
 
 
 interface IContactProps extends ISectionProps{
@@ -140,7 +141,7 @@ const Contact:SectionFunction = ({ready}:IContactProps)=>{
 
     return (
         <>
-            <SectionBox padding zOffset={20} delay={0} x={leftX+(leftWidth/2)} y={50} width={leftWidth} height={300} depthInfo={depthInfo} className={"contactInfo"}>
+            <SectionBox padding zOffset={20} delay={0} x={leftX+(leftWidth/2)} y={50} width={leftWidth} height={300} depthInfo={depthInfo} className={"contactInfo sectionTitle"}>
                 <h2>Contact Info</h2>
             </SectionBox>
             <SectionBox padding zOffset={70} delay={0.1} x={leftX+((leftWidth)/2)+15} y={85} width={leftWidth-40} height={200} depthInfo={depthInfo} className={"contactInfoDetails"}>
@@ -157,7 +158,7 @@ const Contact:SectionFunction = ({ready}:IContactProps)=>{
                     <div className="title">
                         Location
                     </div>
-                    <div className="value">
+                    <div className="value" style={{color:"#FFF"}}>
                         <img src="./icon-location.png" alt="location"/>
                         Georgia, USA
                     </div>

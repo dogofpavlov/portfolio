@@ -8,6 +8,12 @@ $boxTransition:all 0.5s ease-in-out;
     transition: $boxTransition;
     transform-style: preserve-3d;
     will-change:transform;
+    &.disabled3D{
+        top:auto;
+        left:auto;
+        position: relative;
+
+    }
     .boxBorder{
         border-style:solid;
         border-image-slice: 26;

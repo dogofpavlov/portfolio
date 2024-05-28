@@ -24,10 +24,11 @@ export interface ISectionBoxProps extends React.PropsWithChildren{
     noStyle?:boolean;
     outerChildren?:React.ReactNode;
     anchorBottom?:boolean;
+    allowClickWhen3DDisabled?:boolean;
 }
 
 export default function SectionBox (props: ISectionBoxProps) {
-    const {depth, isActive, isDepthCurrent, sectionPath} = props.depthInfo;
+    const {depth, isActive, isDepthCurrent, isExactActive, sectionPath} = props.depthInfo;
 
     let navigate = useNavigate();
 
@@ -53,6 +54,9 @@ export default function SectionBox (props: ISectionBoxProps) {
     if(opacity>1)opacity=1;
 
     let cn:string = "sectionBox";
+    if(isExactActive){
+        cn+=" exactActive";
+    }
     if(props.className){
         cn+=" "+props.className;
     }
@@ -82,6 +86,7 @@ export default function SectionBox (props: ISectionBoxProps) {
         onClick = undefined;
     }
 
+
     return (
         <Box 
             delay={props.delay} 
@@ -100,6 +105,7 @@ export default function SectionBox (props: ISectionBoxProps) {
             noStyle={props.noStyle}
             outerChildren={props.outerChildren}
             anchorBottom={props.anchorBottom}
+            allowClickWhen3DDisabled={props.allowClickWhen3DDisabled}
         >
             {props.children}
         </Box>

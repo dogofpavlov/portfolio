@@ -1,4 +1,6 @@
-import { PropsWithChildren, createContext, useContext, useEffect, useRef, useState } from "react";
+import { PropsWithChildren, createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import useResize, { IResizePoint, startingResizePoint } from "./ResizeContext";
+
 
 
 interface StageSizeContextType{
@@ -17,37 +19,47 @@ interface IStageSizeProviderProps extends PropsWithChildren{
 
 }
 
+
+const maxWidth:number = 1920;
+
 const StageSizeProvider = (props:IStageSizeProviderProps)=>{
+
+    const {resizePoint} = useResize();
+
+    const totalWidthPadding = resizePoint.totalWidthPadding || 300;
     
-    const totalWidthPadding:number = 300;
-
-    const maxWidth:number = 1920;
-
+    const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
     const [totalWidth, setTotalWidth] = useState<number>(Math.min(window.innerWidth-totalWidthPadding, maxWidth));
-
     const resizeTimeoutId = useRef<number>(-1);
 
-    
-    const onResize=()=>{
-        window.clearTimeout(resizeTimeoutId.current);
-        resizeTimeoutId.current = window.setTimeout(()=>{
-            setTotalWidth(Math.min(window.innerWidth-totalWidthPadding, maxWidth));
-        },100);
-    }
 
     useEffect(()=>{
+
+        const onResize=()=>{
+            window.clearTimeout(resizeTimeoutId.current);
+            resizeTimeoutId.current = window.setTimeout(()=>{    
+
+                setWindowWidth(window.innerWidth);
+                setTotalWidth(Math.min(window.innerWidth-totalWidthPadding, maxWidth));
+            },100);
+        }
+        setTotalWidth(Math.min(window.innerWidth-totalWidthPadding, maxWidth));
+
         window.addEventListener("resize", onResize);
         return ()=>{
             window.removeEventListener("resize",onResize);
+            window.clearTimeout(resizeTimeoutId.current);
         }
-    },[]);
+    },[resizePoint]);
 
     const halfWidth = totalWidth/2;
+    const halfWindow = windowWidth/2;
 
-    const halfWindow = window.innerWidth/2;
 
     return (
-        <StageSizeContext.Provider value={{totalWidth, halfWidth:halfWidth, leftX:-halfWidth, rightX:halfWidth, offLeftX:-halfWindow, offRightX:halfWindow}}>
+        <StageSizeContext.Provider value={{
+            totalWidth, halfWidth:halfWidth, leftX:-halfWidth, rightX:halfWidth, offLeftX:-halfWindow, offRightX:halfWindow
+        }}>
             {props.children}
         </StageSizeContext.Provider>
     )

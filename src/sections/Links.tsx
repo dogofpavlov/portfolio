@@ -1,4 +1,5 @@
 import SectionBox from "../SectionBox";
+import useResize from "../context/ResizeContext";
 import useStageSize from "../context/StageSizeContext";
 import { useDepth } from "../hooks/useDepth";
 import { ISectionProps, SectionFunction } from "../types/Section";
@@ -14,6 +15,8 @@ const Links:SectionFunction = ({ready}:ILinksProps)=>{
 
     const depthInfo = useDepth(Links, ready);
     const {totalWidth} = useStageSize();
+
+    const {resizePoint} = useResize();
 
 
 
@@ -46,13 +49,24 @@ const Links:SectionFunction = ({ready}:ILinksProps)=>{
     ]
 
 
-    const gap:number = 30;
+    let gap:number = 30;
+    if(resizePoint.value<=1200){
+        gap = 10;
+    }
+
     let itemWidth:number = (totalWidth-((links.length-1)*gap))/links.length;
     if(itemWidth<250) itemWidth = 250;
 
     if(itemWidth>350) itemWidth = 350;
 
+    if(resizePoint.value<=1200){
+        itemWidth = 220;
+    }
+
+
+
     const actualWidth:number = links.length*itemWidth+((links.length-1)*gap);
+
 
 
 
@@ -63,7 +77,7 @@ const Links:SectionFunction = ({ready}:ILinksProps)=>{
 
     return (
         <>
-            <SectionBox verCenter horCenter zOffset={-20} delay={0} x={leftX+300} y={320} width={200} height={60} depthInfo={depthInfo}>
+            <SectionBox className="sectionTitle" verCenter horCenter zOffset={-20} delay={0} x={leftX+300} y={320} width={200} height={60} depthInfo={depthInfo}>
                 <h1>Links</h1>
             </SectionBox>
             {links.map(($link, $index)=>{

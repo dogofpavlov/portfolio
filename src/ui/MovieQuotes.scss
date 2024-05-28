@@ -1,0 +1,54 @@
+.movieQuotes{
+    color:#FFF;
+    font-weight: 700;
+    font-size: 30px;
+    user-select: none;
+    .boxBorder{
+        overflow: visible;
+    }
+    .boxContent{
+        justify-content: center;
+    }
+    .quoteSize{
+        white-space: nowrap;
+        display:none;
+    }   
+    .quotesContainer{
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 5px;
+        .movieQuoteWord{
+            will-change: opacity, transform, filter;
+            opacity:0;
+            //text-shadow: 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1);
+        }
+        .newLine{
+            width:100%;
+        }
+    }
+    &.disabled3D{
+        font-size:24px;
+        position:absolute;
+        top:60%;
+        left:50%;
+        width:100%;
+        padding:0 20px;
+        transform:translate(-50%,0);
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        .newLine{
+            display:none;
+        }
+        .quotesContainer{
+            row-gap:8px;
+        }
+        .boxContent{
+            justify-content: center;
+        }
+    }
+}

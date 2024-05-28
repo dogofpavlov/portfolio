@@ -6,10 +6,7 @@ import { ThemeProvider } from './context/ThemeContext.tsx';
 import { LocalStorageProvider } from './context/LocalStorageContext.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <LocalStorageProvider>
-      <ThemeProvider>
+   
         <App />
-      </ThemeProvider>
-    </LocalStorageProvider>
   ,
 )

@@ -1,3 +1,4 @@
+@import '../vars';
 .projectDetails{
     &.sectionBox{
      
@@ -30,12 +31,13 @@
                         height:80px;
                         flex-direction: row;
                         align-items: center;
-                        
-                        >span{
+                        .projectDetailsContentHeaderInsideName{
                             margin-left:20px;
-                            margin-right:30px;
-    
-                        }
+                            margin-right:auto;
+                            >span{
+                                margin-right:30px;
+                            }
+                        }                        
                         max-width:1440px;
                         margin:0 auto;
 
@@ -43,7 +45,6 @@
 
 
                     .prev{
-                        margin-left:auto;
                     }
                     .headerBtn{
                         flex-shrink: 0;
@@ -148,10 +149,19 @@
                                 color:#000;
                                 font-size:20px;
                                 font-weight: 700;
-                                display:block;
-                                padding:20px;
+                                display:flex;
+                                flex-direction: column;
+                                padding:15px;
                                 text-decoration: none;
                                 background-color:var(--theme-color);
+                                background-image:var(--theme-bgcolor);
+                                background-size: 100% 100%;
+                                text-align: center;
+                                span{
+                                    font-size:12px;
+                                    opacity:0.5;
+                                    margin-bottom:4px;
+                                }
                             }
 
                         }
@@ -162,6 +172,81 @@
 
             }
         }   
+        &.disabled3D{
+            .boxColor{
+                background:none !important;
+            }
+            .boxContent{
+                .loader{
+                    margin-top:18px;
+                }
+                .projectDetailsContent{
+                    .projectDetailsContentHeader{
+                        position:sticky;
+                        top:0;
+                        z-index:5;
+                        
+                        .projectDetailsContentHeaderInside{
+                            flex-direction: column;
+                            font-size:16px;
+                            height:50px;
+                            align-items: center;
+                            justify-content: center;
+                            padding:0 100px;
+                            text-align: center;
+                            .projectDetailsContentHeaderInsideName{
+                                margin:0;
+                            }
+                            .theme{
+                                display:none;
+                            }
+                            .headerBtn{
+                                position:absolute;
+                                width:50px;
+                                height:50px;
+                                z-index:30;
+                                &.close{
+                                    top:50px;
+                                    right:0;
+                                    background-color:var(--theme-color);
+                                    background-image:var(--theme-bgcolor);
+                                    background-size: 100% 100%;
+                                    .tintIcon{
+                                        background-color:#000;
+                                    }
+                                }
+                                &.prev{
+                                    top:0;
+                                    left:50px;
+
+                                }
+                                &.next{
+                                    top:0;
+                                    right:50px;
+                                }
+                            }
+                        }
+                    }
+                    .projectDetailsImageInfo{
+                        flex-direction: column;
+                        .projectDetailsInfoBox{
+                            width:100%;
+                            padding:30px;
+
+                            @media(max-width:$resize800){
+                                .client, .scope{
+                                    width:100%;
+                                }
+                            }
+                        }
+                        img{
+                            width:100%;
+                        }
+
+                    }
+                }
+            }
+        }
     }
 }
 .projectDetailsInfoBoxDetail{

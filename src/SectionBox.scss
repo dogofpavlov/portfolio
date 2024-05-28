@@ -1,3 +1,4 @@
+@import 'vars';
 .sectionBox{
     .boxContent{
         display:flex;
@@ -16,16 +17,29 @@
     &.padding{
         .boxContent{
             padding:20px;
-            p{
-                line-height: 28px;
-                font-size:18px;
-                color:rgba(255,255,255,0.8);
-                .theme{
-                    opacity:1;
-                }
-                a{
-                    text-decoration: none;
-                }
+        }
+    }
+
+    &.disabled3D{
+
+        display:none;
+        &.exactActive{
+            display:block;
+        }
+    }
+}
+
+.sectionTitle{
+    &.disabled3D{
+        margin-bottom:10px;
+        .boxContent{
+            height:50px;
+        }
+        .boxColor{
+        }
+        @media(max-width:$resize600){
+            h1,h2{
+                font-size:20px;
             }
         }
     }

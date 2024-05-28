@@ -5,6 +5,7 @@ import { useTheme } from './context/ThemeContext';
 import PinholeReveal from './ui/PinholeReveal';
 import { StageSizeProvider } from './context/StageSizeContext';
 import useWorldControl from './context/WorldControlContext';
+import useResize from './context/ResizeContext';
 
 
 export interface IWorldProps extends React.PropsWithChildren{
@@ -13,14 +14,14 @@ export interface IWorldProps extends React.PropsWithChildren{
 
 export default function World (props: IWorldProps) {
 
-    const {isViewingDetail, stageTop} = useWorldControl();
+    const {disable3D, resizeId} = useResize();
 
+    const {isViewingDetail, stageTop} = useWorldControl();
 
     const mousePosition = useMousePosition();
 
     const mouseX = isViewingDetail?0:mousePosition.x;
     const mouseY = isViewingDetail?0:mousePosition.y;
-
 
     const rotationX = isViewingDetail?0:(5*mouseY-8);
     const rotationY = 10*mouseX;
@@ -37,10 +38,24 @@ export default function World (props: IWorldProps) {
 
     const {theme} = useTheme();
 
+    let stageStyle:React.CSSProperties = {
+        top:`${stageTop}%`,
+        transform:`rotateX(${rotationX}deg) rotateY(${rotationY}deg)`,
+    }
+    let appCN:string = "App";
+    
+    if(disable3D){
+        stageStyle = {};
+        appCN+=" disabled3D";
+    }else{
+        appCN+=" can3D";
+    }
+
+    
 
     return (
-        <StageSizeProvider>
-            <div className='App' style={{backgroundColor:theme.bgColor}}>
+        <>
+            <div className={appCN} style={{backgroundColor:theme.bgColor}}>
                 <div className="sky" style={{
                     backgroundImage:`url('./theme/${theme.id}/sky.jpg')`, 
                     backgroundPosition:`${skyPositionX}% 0`, 
@@ -56,14 +71,11 @@ export default function World (props: IWorldProps) {
                     backgroundPosition:`${skyPositionX}% 0`, 
                     height:`${groundPercent}%`
                 }}/>
-                <div className="stage" style={{
-                    top:`${stageTop}%`,
-                    transform:`rotateX(${rotationX}deg) rotateY(${rotationY}deg)`,
-                }}>
+                <div className="stage" style={stageStyle}>
                     {props.children}
                 </div>
             </div>
             <PinholeReveal/>
-        </StageSizeProvider>
+        </>
     );
 }

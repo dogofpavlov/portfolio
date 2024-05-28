@@ -7,7 +7,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import Home from './sections/Home';
 import About from './sections/About';
 import World from './World';
-import { useTheme } from './context/ThemeContext';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 
 import ChangeTheme from './ui/ChangeTheme';
 import Navigation from './ui/Navigation';
@@ -15,11 +15,14 @@ import Skills from './sections/Skills';
 import Projects from './sections/Projects';
 import Contact from './sections/Contact';
 import ProjectTypes from './sections/ProjectTypes';
-import Api from './api/Api';
-import { DataProvider } from './context/DataContext';
 import ProjectDetails from './sections/ProjectDetails';
-import { WorldControlProvider } from './context/WorldControlContext';
 import Links from './sections/Links';
+
+import { DataProvider } from './context/DataContext';
+import { WorldControlProvider } from './context/WorldControlContext';
+import { ResizeProvider } from './context/ResizeContext';
+import { LocalStorageProvider } from './context/LocalStorageContext';
+import { StageSizeProvider } from './context/StageSizeContext';
 
 
 export interface IAppProps {
@@ -27,19 +30,26 @@ export interface IAppProps {
 }
 
 export default function App ($props: IAppProps) {
-
     return (
-        <WorldControlProvider>
-            <World>
-                <DataProvider>
-                    <HashRouter>
-                        <Routes>
-                            <Route path="*" element={<Sections/>}  />
-                        </Routes>
-                    </HashRouter>
-                </DataProvider>
-            </World>
-        </WorldControlProvider>
+        <LocalStorageProvider>
+            <ThemeProvider>
+                <ResizeProvider>
+                    <StageSizeProvider>
+                        <WorldControlProvider>
+                            <World>
+                                <DataProvider>
+                                    <HashRouter>
+                                        <Routes>
+                                            <Route path="*" element={<Sections/>}  />
+                                        </Routes>
+                                    </HashRouter>
+                                </DataProvider>
+                            </World>
+                        </WorldControlProvider>
+                    </StageSizeProvider>
+                </ResizeProvider>
+            </ThemeProvider>
+        </LocalStorageProvider>
     );
 }
 
@@ -65,6 +75,8 @@ export function Sections ($props: ISectionsProps) {
 
     return (
         <>
+            <ChangeTheme ready={ready}/>
+            <Navigation ready={ready}/>
             <Home ready={ready}/>
             <About ready={ready}/>
             <Skills ready={ready}/>
@@ -73,8 +85,6 @@ export function Sections ($props: ISectionsProps) {
             <ProjectTypes ready={ready}/>
             <ProjectDetails ready={ready}/>
             <Contact ready={ready}/>
-            <ChangeTheme ready={ready}/>
-            <Navigation ready={ready}/>
         </>
     );
 }

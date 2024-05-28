@@ -1,0 +1,36 @@
+.welcome{
+    .boxColor{
+        transition: all 0.5s ease-in-out;
+    }
+
+    &.sectionBox{
+        &.disabled3D{
+            &.exactActive{
+                display:flex;
+                flex-direction: column;
+                align-items: center;
+                height:100%;
+                .boxBorder{
+                    margin-top:200px;
+                    justify-content: center;
+                }
+                .boxContent{
+                    >h1{
+                        transform:none !important;
+                        font-size:22px;
+                        padding:20px;
+                        .theme{
+                            font-size:20px;
+                            width:240px;
+                            margin:0 auto;
+                            margin-bottom:10px;
+                            line-height: normal;
+                        }
+
+                    }
+                }
+
+            }
+        }
+    }
+}

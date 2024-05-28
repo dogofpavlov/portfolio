@@ -9,6 +9,55 @@
             background-color:var(--theme-color);
         }
     }
+    &.disabled3D{
+        position:absolute;
+        top:0px;
+
+        .boxContent{
+            width:50px;
+            height:50px;
+
+        }
+        &.typeArrowRight{
+            right:50px;
+        }
+        &.typeArrowLeft{
+            left:50px;
+        }
+        .pushHover{
+
+        }
+        .tintIcon{
+            width:30px;
+            height:30px;
+        }
+
+    }
+
+}
+
+.projectTypeOptions{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .projectOption{
+        flex-grow:1;
+        .boxColor{
+
+        }
+        a{
+            width:100%;
+            font-size:0;
+        }
+        &.resize1024{
+            width:33.33%;
+            max-width:33.33%;
+        }
+        &.resize800, &.resize600{
+            width:50%;
+            max-width:50%;
+        }
+    }
 
 }
 .projectOption{
@@ -18,22 +67,6 @@
     }
     a{
         position:relative;
-        &:before{	
-            position: absolute;
-            top: 0;
-            left: -75%;
-            z-index: 2;
-            display: block;
-            content: '';
-            width: 50%;
-            height: 100%;
-            //background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%);
-            //background:#FF0000;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%);
-           // -webkit-transform: skewX(-25deg);
-            transform: skewX(-25deg);
-
-        }
     }
     .projectTypeOptionName{
         position:absolute;
@@ -48,6 +81,7 @@
         font-size:24px;
         font-weight: 600;
         text-align: center;
+        white-space:nowrap;
         text-shadow: 0 0 5px rgba(0,0,0), 0 0 5px rgba(0,0,0), 0 0 10px rgba(0,0,0), 0 0 10px rgba(0,0,0), 0 0 10px rgba(0,0,0), 0 0 10px rgba(0,0,0), 0 0 10px rgba(0,0,0), 0 0 10px rgba(0,0,0);
     }
     .boxContent{
@@ -71,6 +105,11 @@
             }
         }
     }
+    &.disabled3D{
+        .projectTypeOptionName{
+            display:none;
+        }
+    }
 }
 
 @keyframes shine{
@@ -91,5 +130,32 @@
         color:#FFF;
         text-align: center;
         text-decoration: none;
+    }
+    &.disabled3D{
+        margin-bottom:10px;
+        .boxBorder{
+            justify-content: center;
+        }
+        .boxContent{
+            a{
+                padding:0 20px;
+            }
+        }
+        .boxColor{
+            height:50px;
+            flex-grow:0;
+            
+            a{
+                h3{
+                    width:100px;
+                    span{
+                        display:block;
+                        margin-bottom:4px;
+                    }
+
+                }
+            }
+        }
+
     }
 }

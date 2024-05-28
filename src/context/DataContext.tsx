@@ -13,6 +13,7 @@ export interface IProject{
     tech:string;
     link:string;
     type:IProjectType;
+    latest:boolean;
 }
 
 export interface IProjectType{
@@ -25,12 +26,14 @@ export interface IProjects{
     projects:{
         projectType:IProjectType[];
         all:IProject[];
+        latest:IProject[];
     }
 }
 
 interface DataContextType{
     dataProjectsTypes:IProjectType[];
     dataAllProjects:IProject[];
+    dataLatestProjects:IProject[];
     getProjectPath:($id:string)=>string;
 
 }
@@ -104,7 +107,7 @@ const DataProvider = (props:IDataProviderProps)=>{
     }
 
     return (
-        <DataContext.Provider value={{dataProjectsTypes:dataProjects.projects.projectType, dataAllProjects:dataProjects.projects.all, getProjectPath}}>
+        <DataContext.Provider value={{dataProjectsTypes:dataProjects.projects.projectType, dataAllProjects:dataProjects.projects.all, dataLatestProjects:dataProjects.projects.latest, getProjectPath}}>
             {props.children}
         </DataContext.Provider>
     )

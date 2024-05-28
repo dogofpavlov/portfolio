@@ -46,7 +46,7 @@ export function useDepth($section:SectionFunction, $ready:boolean, $sectionPathD
     
     let isActive:boolean = $ready && path.includes(sectionPath);
     let isExactActive:boolean = $ready && path===sectionPath;
-    let isDepthCurrent:boolean = activeDepth===$section.DEPTH;
+    let isDepthCurrent:boolean = $ready && activeDepth===$section.DEPTH;
 
     return {depth, isActive, activeDepth, isDepthCurrent, isExactActive, sectionPath:sectionPath, pathSplit}
 }

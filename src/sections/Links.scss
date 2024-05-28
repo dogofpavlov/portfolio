@@ -22,4 +22,28 @@
 
         }
     }
+
+    &.disabled3D{
+        margin-bottom:10px;
+        &.exactActive{
+        }
+        .boxBorder{
+            margin:0 10px;
+        }
+        .boxColor{
+            padding:20px 0;
+        }
+        .boxContent{
+            a{
+                width:auto;
+                img{
+                    width:50px;
+                }
+                .linkHandle{
+                    font-size:16px;
+                }
+            }
+        }
+
+    }
 }

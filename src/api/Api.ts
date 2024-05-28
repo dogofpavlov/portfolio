@@ -26,6 +26,12 @@ class ApiManager{
                     return $prev;
                 },[]);
 
+                objResponse.projects.latest = objResponse.projects.all.filter(($proj)=>{
+                    return $proj.latest;
+                })
+
+
+
                 return objResponse;
 
             } else {

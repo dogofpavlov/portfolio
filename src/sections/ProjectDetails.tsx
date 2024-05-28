@@ -18,6 +18,7 @@ import forceDivReflow from "../util/ForceDivReflow";
 import PushHoverBtn from "../ui/PushHoverBtn";
 import TintIcon from "../ui/TintIcon";
 import { gsap } from 'gsap';
+import NextFrame from "../util/NextFrame";
 
 interface IProjectDetailsProps extends ISectionProps{
 
@@ -26,10 +27,15 @@ interface IProjectDetailsProps extends ISectionProps{
 const ProjectDetails:SectionFunction = ({ready}:IProjectDetailsProps)=>{
 
 
+    
+
+    const divProjectDetailsContentContainer = useRef<HTMLDivElement>(null);
     const divProjectDetailsContentContainerReveals = useRef<HTMLDivElement>(null);
+    const divProjectDetailsName = useRef<HTMLDivElement>(null);
 
 
     const closeTween = useRef<gsap.core.Tween>();
+    const nameTween = useRef<gsap.core.Tween>();
 
     const [windowSize, setWindowSize] = useState<{w:number, h:number}>({w:window.innerWidth, h:window.innerHeight});
 
@@ -41,8 +47,13 @@ const ProjectDetails:SectionFunction = ({ready}:IProjectDetailsProps)=>{
     const [arrImageNums, setArrImageNums] = useState<number[]>([1]);
 
     const reflowTimeoutID = useRef<number>(-1);
+    const timeoutIDNameIntro = useRef<number>(-1);
+
+    
 
     const depthInfo = useDepth(ProjectDetails,ready);
+
+
     const {dataProjectsTypes, dataAllProjects, getProjectPath} = useProjectData();
 
     const pathProjectTypeId = depthInfo.pathSplit.length>=ProjectTypes.DEPTH?depthInfo.pathSplit[ProjectTypes.DEPTH-1]:"";
@@ -74,6 +85,7 @@ const ProjectDetails:SectionFunction = ({ready}:IProjectDetailsProps)=>{
     }
 
 
+    depthInfo.isExactActive = depthInfo.isDepthCurrent && (pathProjectId && pathProjectTypeId)?true:false;
 
     const {setIsViewingDetail, isViewingDetail} = useWorldControl();
 
@@ -86,11 +98,30 @@ const ProjectDetails:SectionFunction = ({ready}:IProjectDetailsProps)=>{
         const loadProject = async ($project:IProject, $projectType:IProjectType)=>{
             if($project){
                 window.clearTimeout(reflowTimeoutID.current);
-    
+                window.clearTimeout(timeoutIDNameIntro.current);
+
+                const loadingDone = ()=>{
+
+                    if(divProjectDetailsContentContainerReveals.current){                    
+                        divProjectDetailsContentContainerReveals.current.style.height = "auto";          
+                        divProjectDetailsContentContainerReveals.current.style.overflow = "visible";
+                    }
+
+                    setProjectType($projectType);
+                    setProject($project);
+                    
+                    timeoutIDNameIntro.current = window.setTimeout(()=>{
+                        if(divProjectDetailsName.current && isMounted){
+                            nameTween.current = gsap.to(divProjectDetailsName.current,{opacity:1, duration:0.5});
+                        }
+                    },200);
+                }
+
                 setArrImageNums([1]);
                 if(!isProjectLoaded){
     
                     setIsProjectLoading(true);
+                    
                     try{
                         
                         if(isMounted){
@@ -106,23 +137,17 @@ const ProjectDetails:SectionFunction = ({ready}:IProjectDetailsProps)=>{
 
                     
                     if(isMounted){
-                        if(divProjectDetailsContentContainerReveals.current){          
-                            divProjectDetailsContentContainerReveals.current.style.height = "auto";       
-                            divProjectDetailsContentContainerReveals.current.style.overflow = "visible";
-                        }
-                        setProjectType($projectType);
-                        setProject($project);
                         setIsProjectLoading(false);
                         setIsViewingDetail(true);
                         setIsProjectLoaded(true);
+                        loadingDone();
             
                         window.clearTimeout(reflowTimeoutID.current);
                         reflowTimeoutID.current = window.setTimeout(()=>{
-                            if(divProjectDetailsContentContainerReveals.current && isMounted){
-                                forceDivReflow(divProjectDetailsContentContainerReveals.current);
+                            if(divProjectDetailsContentContainer.current && isMounted){
+                                forceDivReflow(divProjectDetailsContentContainer.current);
                             }
                         },1000);
-
                     }
                 }else{
     
@@ -132,33 +157,31 @@ const ProjectDetails:SectionFunction = ({ready}:IProjectDetailsProps)=>{
                             await PreloadImage(`./projects/${$project.id}1.jpg`);
                         }
                         if(isMounted){
-                            await delay(1000);
+                            await delay(100);
                         }
                     }catch($error){
             
                     }
                     if(isMounted){
-                        if(divProjectDetailsContentContainerReveals.current){                    
-                            divProjectDetailsContentContainerReveals.current.style.height = "auto";          
-                            divProjectDetailsContentContainerReveals.current.style.overflow = "visible";
-                        }
-                        setProjectType($projectType);
-                        setProject($project);
+                        loadingDone();
 
                     }
                 }
             }
         }
-    
-
 
 
         if(pathProject && pathProjectType){
             if(project){
                 //close current project then load next
                 if(divProjectDetailsContentContainerReveals.current){
+
                     divProjectDetailsContentContainerReveals.current.style.height = divProjectDetailsContentContainerReveals.current.clientHeight+"px";          
                     divProjectDetailsContentContainerReveals.current.style.overflow = "hidden";
+
+                    if(divProjectDetailsName.current){
+                        nameTween.current = gsap.to(divProjectDetailsName.current,{opacity:0, duration:0.5});
+                    }
                     closeTween.current = gsap.to(divProjectDetailsContentContainerReveals.current,{height:0, duration:1, onComplete:()=>{    
                         if(isMounted){
                             loadProject(pathProject, pathProjectType);
@@ -173,7 +196,10 @@ const ProjectDetails:SectionFunction = ({ready}:IProjectDetailsProps)=>{
             if(closeTween.current){
                 closeTween.current.kill();
             }
-
+            if(nameTween.current){
+                nameTween.current.kill();
+            }
+            window.clearTimeout(timeoutIDNameIntro.current);
             window.clearTimeout(reflowTimeoutID.current);
             setProjectType(undefined);
             setProject(undefined);
@@ -185,9 +211,13 @@ const ProjectDetails:SectionFunction = ({ready}:IProjectDetailsProps)=>{
 
         return ()=>{
             isMounted=false;
+            window.clearTimeout(timeoutIDNameIntro.current);
             window.clearTimeout(reflowTimeoutID.current);
             if(closeTween.current){
                 closeTween.current.kill();
+            }
+            if(nameTween.current){
+                nameTween.current.kill();
             }
         }
 
@@ -233,6 +263,8 @@ const ProjectDetails:SectionFunction = ({ready}:IProjectDetailsProps)=>{
         }
     }
 
+
+
     return (
         <>
             <SectionBox anchorBottom={isViewingDetail} verCenter horCenter zOffset={0} delay={0} x={x} y={y} width={width} height={height} depthInfo={depthInfo} className={ProjectDetails.ID}>
@@ -244,9 +276,10 @@ const ProjectDetails:SectionFunction = ({ready}:IProjectDetailsProps)=>{
                         <div className="projectDetailsContent">
                             <div className="projectDetailsContentHeader">
                                 <div className="projectDetailsContentHeaderInside">
-
-                                    <ThemeSpan>{projectType.label}</ThemeSpan>
-                                    {project.name}
+                                    <div className="projectDetailsContentHeaderInsideName" ref={divProjectDetailsName} style={{opacity:0}}>
+                                        <ThemeSpan>{projectType.label}</ThemeSpan>
+                                        {project.name}
+                                    </div>
                                     {dataAllProjects[prevProjectIndex] && (
                                         <Link to={getProjectPath(dataAllProjects[prevProjectIndex].id)} className="headerBtn prev">
                                             <PushHoverBtn direction="left">
@@ -266,8 +299,7 @@ const ProjectDetails:SectionFunction = ({ready}:IProjectDetailsProps)=>{
                                     </Link>
                                 </div>
                             </div>
-                            <div className="projectDetailsContentContainer" >
-                            
+                            <div className="projectDetailsContentContainer" ref={divProjectDetailsContentContainer}>                            
                                 <div className="projectDetailsContentContainerReveals" ref={divProjectDetailsContentContainerReveals}>
 
                                     {arrImageNums.map(($i)=>{
@@ -325,11 +357,15 @@ export  function ProjectDetailsInfo (props: IProjectDetailsInfoProps) {
             <div className="link">
                 {hasRealLink && (
                     <>
-                        <a href={props.project.link} target="_blank">Launch Project</a>
+                        <a href={props.project.link} target="_blank">
+                            <span>PROJECT STATUS</span>
+                            Launch Project
+                        </a>
                     </>   
                 )}
                 {!hasRealLink && (
                     <div className="linkStatus">
+                        <span>PROJECT STATUS</span>
                         {props.project.link}
                     </div>
                 )}

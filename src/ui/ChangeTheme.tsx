@@ -4,6 +4,8 @@ import './ChangeTheme.scss';
 import { THEMES, useTheme } from "../context/ThemeContext";
 import ThemeSpan from "./ThemeSpan";
 import useStageSize from "../context/StageSizeContext";
+import useResize from "../context/ResizeContext";
+import { useDepthPath } from "../hooks/useDepth";
 
 export interface IChangeThemeProps {
     ready:boolean;
@@ -16,18 +18,31 @@ export default function ChangeTheme (props: IChangeThemeProps) {
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
     const [localThemeId, setLocalThemeId] = useState<string>(theme.id);
 
-    const expandedW:number = 495;
+    const expandedW:number = 560;
     const expandedH:number = 60;
 
+    const resize = useResize();
 
     const {rightX} = useStageSize();
 
-    const width = isExpanded?expandedW:211;
+    const width = isExpanded?expandedW:212;
     const height = 60;
-    const x = rightX-(width/2);
-    const y = props.ready?(isExpanded?470:470):0;
+    
+    const {activeDepth} = useDepthPath();
+
+    let y = props.ready?(activeDepth===0?350:470):0;
+
+    let x = rightX-(width/2);
+    if(activeDepth===0){
+        x = rightX-(width/2)-300;
+    }
+
+    if(x<0){
+        x = 0;
+    }
 
 
+    
 
     const themesJSX:JSX.Element[] = [];
     
@@ -40,25 +55,74 @@ export default function ChangeTheme (props: IChangeThemeProps) {
             color:themeOption.themeColor
         }
         if(isSelected){
-            style.backgroundColor = themeOption.themeColor;
+            style.backgroundImage = `url(./theme/${themeOption.id}/color.jpg)`;
+            style.backgroundSize="100% 100%";
             style.color = "#000000";
         }
         themesJSX.push(<div style={style} className={`themeOption`} key={themeOption.id} onClick={()=>{
             if(isThemeLoaded && isPinholeOpen && !isSelected){
                 setLocalThemeId(themeOption.id);
                 changeTheme(themeOption.id);
+                if(resize.disable3D){
+                    resize.toggleThemeVisible();
+                }
             }
         }}>{themeOption.label}</div>);
     }
 
 
+
+
+    let audioToggleCN:string = "btnAudioToggle";
+    if(isMusicPlaying){
+        audioToggleCN+=" playing";
+    }
+    if(resize.disable3D){
+        audioToggleCN+=" mobileAudioToggle";
+    }
+
+    const btnAudioToggle = (
+        <div className={audioToggleCN} onClick={()=>{
+            if(hasInteractedOnce){
+                if(isMusicPlaying){
+                    stopMusic();
+                }else{
+                    playMusic();
+                }
+            }else{
+                if(!isMusicPlaying){
+                    playMusic();
+                }
+            }
+        }}>
+            <img src={`./icon-${(isMusicPlaying?"volume":"mute")}.png`} alt="audioToggle"/>
+        </div>
+    );
+
+    let mobileThemeToggleCN:string = "mobileThemeToggle";
+    let changeThemeCN:string = "changeTheme";
+    if(resize.disable3D && resize.mobileThemeVisible){
+        changeThemeCN+=" mobileShow";
+        mobileThemeToggleCN+=" themeVisible";
+    }
+
     return (
         <>
+            {resize.disable3D && (
+                <>
+                    <div className={mobileThemeToggleCN} onClick={()=>{
+                        resize.toggleThemeVisible();
+                    }}>
+                        <img src="./icon-theme.png" alt="Change Theme"/>
+                    </div>
+                    {btnAudioToggle}
+                </>
+            )}
             <Box
                 delay={0.1} 
                 opacity={props.ready?1:0} 
                 contentOpacity={1}
-                className={"changeTheme"} 
+                className={changeThemeCN} 
                 width={width} 
                 height={height} 
                 contentWidth={expandedW}
@@ -66,26 +130,8 @@ export default function ChangeTheme (props: IChangeThemeProps) {
                 x={x} 
                 y={y} 
                 z={-20} 
-            >
-                <div className={`btnAudioToggle ${isMusicPlaying?"playing":""}`} onClick={()=>{
-                    console.log('audio press', hasInteractedOnce);
-                    if(hasInteractedOnce){
-                        if(isMusicPlaying){
-                            console.log('stopping music');
-                            stopMusic();
-                        }else{
-                            console.log("running play msuci");
-                            playMusic();
-                        }
-                    }else{
-                        if(!isMusicPlaying){
-                            playMusic();
-
-                        }
-                    }
-                }}>
-                    <img src={`./icon-${(isMusicPlaying?"volume":"mute")}.png`} alt="audioToggle"/>
-                </div>
+            >   
+                {!resize.disable3D && btnAudioToggle}
                 <div className="btnChangeTheme" onClick={()=>{
                     setIsExpanded(!isExpanded);
                 }}>

@@ -74,9 +74,35 @@ body{
 :root{
 	--theme-color:#FFFFFF;
 	--theme-color-hover:#FFFFFF33;
+	--theme-bgcolor:url('./theme/defaultColor.jpg');
 }
 
 .theme{
 	color:var(--theme-color);
 	font-weight: 600;
+}
+img{
+	filter:invert(0) !important;
+}
+
+@media (prefers-color-scheme:dark){
+	
+	:root{
+		--theme-color:#FFFFFF;
+		--theme-color-hover:#FFFFFF33;
+        color-scheme: light;
+	}
+
+	img{
+		filter:invert(0) !important;
+	}
+}
+@media (prefers-color-scheme: dark) {
+}
+
+/* Chrome */
+@media (forced-colors: active) {
+    :root {
+        color-scheme: light;
+    }
 }

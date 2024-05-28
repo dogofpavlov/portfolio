@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { NavLink } from 'react-router-dom';
 import Home from '../sections/Home';
 import About from '../sections/About';
@@ -10,6 +10,8 @@ import Contact from '../sections/Contact';
 import { useDepthPath } from '../hooks/useDepth';
 import useStageSize from '../context/StageSizeContext';
 import Links from '../sections/Links';
+import useResize from '../context/ResizeContext';
+import { useState } from 'react';
 
 export interface INavigationProps {
     ready:boolean;
@@ -17,40 +19,82 @@ export interface INavigationProps {
 
 export default function Navigation (props: INavigationProps) {
 
-    const width = props.ready?650:50;
-    const height = props.ready?70:0;
+
+    const fullWidth = 650;
+    const fullHeight = 70;
+
+
+    const width = props.ready?fullWidth:50;
+    const height = props.ready?fullHeight:0;
 
     const {rightX} = useStageSize();
-
-    const x = rightX-(width/2);
-    const y = props.ready?400:0;
-
     const {activeDepth} = useDepthPath();
+
+    let x = rightX-(width/2);
+    let y = props.ready?400:0;
+
+    if(activeDepth===0){
+        x = 0;
+        y = 120;
+    }
+
+    if(x<0){
+        x = 0;
+    }
+
+
 
     const zOffset = activeDepth===3?-10:50;
 
+
+    const resize = useResize();
+
+    let onNavClick:(($event:React.MouseEvent<HTMLAnchorElement>)=>void) | undefined = undefined;
+
+    let cn:string = "navigation";
+
+    let mobileToggleCN:string = "mobileNavToggle";
+
+    if(resize.disable3D && resize.mobileNavVisible){
+        cn+=" mobileShow";
+        mobileToggleCN+=" mobileShow";
+        onNavClick = ($event:React.MouseEvent<HTMLAnchorElement>)=>{
+            resize.setMobileNavVisible(false);
+        }
+    }
+
+
+
     return (
-        
-        <Box 
-            contentHeight={height}
-            contentWidth={width}
-            opacity={props.ready?1:0} 
-            contentOpacity={1}
-            delay={0.15}
-            className='navigation' 
-            height={height} 
-            width={width} 
-            x={x} 
-            y={y} 
-            z={zOffset}
-        >
-                
-            <NavLink to={Home.PATH}>Home</NavLink>
-            <NavLink to={About.PATH}>About</NavLink>
-            <NavLink to={Projects.PATH}>Projects</NavLink>
-            <NavLink to={Contact.PATH}>Contact</NavLink>
-            <NavLink to={Links.PATH}>Links</NavLink>
-            <NavLink to={"http://ryancaillouet.com/my-resume.pdf"} target='_blank'>My Resume</NavLink>
-        </Box>
+        <>
+            {resize.disable3D && (
+                <div className={mobileToggleCN} onClick={()=>{
+                    resize.setMobileNavVisible(!resize.mobileNavVisible);
+                }}>
+                    <div/>
+                </div>
+            )}
+            <Box 
+                contentHeight={height}
+                contentWidth={width}
+                opacity={props.ready?1:0} 
+                contentOpacity={1}
+                delay={0.15}
+                className={cn} 
+                height={height} 
+                width={width} 
+                x={x} 
+                y={y} 
+                z={zOffset}
+            >
+                    
+                <NavLink to={Home.PATH} onClick={onNavClick}>Home</NavLink>
+                <NavLink to={About.PATH} onClick={onNavClick}>About</NavLink>
+                <NavLink to={Projects.PATH} onClick={onNavClick}>Projects</NavLink>
+                <NavLink to={Contact.PATH} onClick={onNavClick}>Contact</NavLink>
+                <NavLink to={Links.PATH} onClick={onNavClick}>Links</NavLink>
+                <NavLink to={"http://ryancaillouet.com/my-resume.pdf"} target='_blank'>My Resume</NavLink>
+            </Box>
+        </>
     );
 }

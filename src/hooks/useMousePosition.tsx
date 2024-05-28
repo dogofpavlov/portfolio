@@ -138,7 +138,7 @@ function useMousePosition(): MousePosition {
 
             window.removeEventListener('touchmove', handleMove);
             window.removeEventListener('touchstart', handleStart);
-           // window.removeEventListener('touchend', handleEnd);
+            window.removeEventListener('touchend', handleEnd);
 
             if(tweenRef.current){
                 tweenRef.current.kill();

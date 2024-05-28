@@ -13,6 +13,7 @@ import PushHoverBtn from "../ui/PushHoverBtn";
 import TintIcon from "../ui/TintIcon";
 import ThemeSpan from "../ui/ThemeSpan";
 import PushHoverText from "../ui/PushHoverText";
+import useResize from "../context/ResizeContext";
 
 
 interface IProjectTypesProps extends ISectionProps{
@@ -39,8 +40,13 @@ const ProjectTypes:SectionFunction = ({ready}:IProjectTypesProps)=>{
 
                 const typeDepthInfo = {...depthInfo};
                 typeDepthInfo.isActive = typeDepthInfo.isActive && isTypeActive;
-                typeDepthInfo.isExactActive = typeDepthInfo.isExactActive && isTypeActive;
+               // typeDepthInfo.isExactActive = typeDepthInfo.isExactActive && isTypeActive;
+                typeDepthInfo.isExactActive = typeDepthInfo.isDepthCurrent && isTypeActive;
+               
                 typeDepthInfo.sectionPath = typeDepthInfo.sectionPath+$projectType.id;
+
+
+                console.log("dataProjecTypes", $projectType.label, typeDepthInfo);
 
                 return (
                     <ProjectTypeOptions depthInfo={typeDepthInfo} type={$projectType} key={$projectType.id+"projecetTypeOptions"} />
@@ -86,6 +92,11 @@ export function ProjectTypeOptions (props: IProjectTypeOptionsProps) {
     const occupiedLeftX:number = -halfOccupiedWidth;
     const occupiedRightX:number = halfOccupiedWidth;
 
+    const {dataProjectsTypes} = useProjectData();
+
+    const resize = useResize();
+
+    const navigate = useNavigate();
 
     let delay:number = 0.1;
 
@@ -97,11 +108,32 @@ export function ProjectTypeOptions (props: IProjectTypeOptionsProps) {
     let maxScroll = props.type.project.length-numVisible;
 
     const nextPrev=($dir:number)=>{
-        let newScrollIndex = scrollIndex+$dir;
-        if(newScrollIndex<0) newScrollIndex=0;
-        if(newScrollIndex>maxScroll)newScrollIndex = maxScroll;
 
-        setScrollIndex(newScrollIndex);
+        if(resize.disable3D){
+            let curIndex = dataProjectsTypes.findIndex(($type)=>{
+                return $type.id===props.type.id;
+            });
+            if(curIndex!==-1){
+                curIndex+=$dir;
+                if(curIndex<0) curIndex=dataProjectsTypes.length-1;
+                if(curIndex>dataProjectsTypes.length-1) curIndex = 0;
+
+
+                let newType = dataProjectsTypes[curIndex];
+
+                
+                navigate(Projects.PATH+newType.id);
+
+            }
+
+
+        }else{
+            let newScrollIndex = scrollIndex+$dir;
+            if(newScrollIndex<0) newScrollIndex=0;
+            if(newScrollIndex>maxScroll)newScrollIndex = maxScroll;
+            setScrollIndex(newScrollIndex);
+        }
+
     }
 
     useEffect(()=>{
@@ -123,24 +155,8 @@ export function ProjectTypeOptions (props: IProjectTypeOptionsProps) {
         nextBtnX = occupiedRightX+50;
     }
 
-
-    return (
+    const projectTypeOptions = (
         <>
-            <SectionBox verCenter horCenter zOffset={20} delay={0} x={occupiedLeftX+50} y={400} width={lblBoxWidth} height={60} depthInfo={props.depthInfo}>
-                <h1>{props.type.label}</h1>
-            </SectionBox>  
-            <SectionBox zOffset={40} delay={0} x={occupiedRightX-50} y={350} width={230} height={50} depthInfo={props.depthInfo} className="backToProjects">
-                <Link to={Projects.PATH}>
-                    <h3><ThemeSpan>BACK TO </ThemeSpan>PROJECTS</h3>
-                </Link>
-            </SectionBox>  
-            <SectionBox noStyle verCenter horCenter zOffset={30} delay={0} x={prevBtnX} y={170} width={120} height={120} depthInfo={props.depthInfo} className="projectTypeArrow" onClick={()=>{
-                nextPrev(-1);
-            }}>
-                <PushHoverBtn direction={PushHoverBtn.DIRECTION_LEFT}>
-                    <TintIcon src="./icon-prev.png"/>
-                </PushHoverBtn>
-            </SectionBox>  
             {props.type.project.map(($project, $index)=>{
 
                 let numX = occupiedLeftX+(width/2)+(($index-scrollIndex)*widthPerOption);
@@ -167,13 +183,47 @@ export function ProjectTypeOptions (props: IProjectTypeOptionsProps) {
                     />
                 );
             })} 
-            <SectionBox noStyle verCenter horCenter zOffset={30} delay={(2*delay)} x={nextBtnX} y={170} width={120} height={120} depthInfo={props.depthInfo} className="projectTypeArrow" onClick={()=>{
+        </>
+    );
+
+
+    return (
+        <>
+            <SectionBox className="sectionTitle" verCenter horCenter zOffset={20} delay={0} x={occupiedLeftX+50} y={400} width={lblBoxWidth} height={60} depthInfo={props.depthInfo}>
+                <h1>{props.type.label}</h1>
+            </SectionBox>  
+            
+            <SectionBox zOffset={40} delay={0} x={occupiedRightX-50} y={350} width={230} height={50} depthInfo={props.depthInfo} className="backToProjects">
+                <Link to={Projects.PATH}>
+                    <h3><ThemeSpan>BACK TO </ThemeSpan>PROJECTS</h3>
+                </Link>
+            </SectionBox> 
+            <SectionBox allowClickWhen3DDisabled noStyle verCenter horCenter zOffset={30} delay={0} x={prevBtnX} y={170} width={120} height={120} depthInfo={props.depthInfo} className="projectTypeArrow typeArrowLeft" onClick={()=>{
+                console.log("wuttt");
+                nextPrev(-1);
+            }}>
+                <PushHoverBtn direction={PushHoverBtn.DIRECTION_LEFT}>
+                    <TintIcon src="./icon-prev.png"/>
+                </PushHoverBtn>
+            </SectionBox>  
+            <SectionBox allowClickWhen3DDisabled noStyle verCenter horCenter zOffset={30} delay={(2*delay)} x={nextBtnX} y={170} width={120} height={120} depthInfo={props.depthInfo} className="projectTypeArrow typeArrowRight" onClick={()=>{
                 nextPrev(1);
             }}>
                 <PushHoverBtn direction={PushHoverBtn.DIRECTION_RIGHT}>
                     <TintIcon src="./icon-next.png"/>
                 </PushHoverBtn>
             </SectionBox>  
+            {resize.disable3D && (
+                <div className="projectTypeOptions">
+                    {projectTypeOptions}
+                </div>
+            )}
+            {!resize.disable3D && (
+                <>
+                    {projectTypeOptions}
+                </>
+            )}
+             
         </>
     );
 }
@@ -196,6 +246,9 @@ export interface IProjectTypesOptionProps {
 export function ProjectTypesOption (props: IProjectTypesOptionProps) {
 
     const [isThumbLoaded, setIsThumbLoaded] = useState<boolean>(false);
+
+
+
 
     return (
         <SectionBox zOffset={props.zOffset} delay={props.delay} x={props.x} y={props.y} width={props.width} height={props.height} depthInfo={props.depthInfo} className={"projectOption"} outerChildren={(
