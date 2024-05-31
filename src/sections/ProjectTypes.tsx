@@ -42,11 +42,7 @@ const ProjectTypes:SectionFunction = ({ready}:IProjectTypesProps)=>{
                 typeDepthInfo.isActive = typeDepthInfo.isActive && isTypeActive;
                // typeDepthInfo.isExactActive = typeDepthInfo.isExactActive && isTypeActive;
                 typeDepthInfo.isExactActive = typeDepthInfo.isDepthCurrent && isTypeActive;
-               
                 typeDepthInfo.sectionPath = typeDepthInfo.sectionPath+$projectType.id;
-
-
-                console.log("dataProjecTypes", $projectType.label, typeDepthInfo);
 
                 return (
                     <ProjectTypeOptions depthInfo={typeDepthInfo} type={$projectType} key={$projectType.id+"projecetTypeOptions"} />
@@ -193,13 +189,12 @@ export function ProjectTypeOptions (props: IProjectTypeOptionsProps) {
                 <h1>{props.type.label}</h1>
             </SectionBox>  
             
-            <SectionBox zOffset={40} delay={0} x={occupiedRightX-50} y={350} width={230} height={50} depthInfo={props.depthInfo} className="backToProjects">
+            <SectionBox zOffset={40} delay={0} x={0} y={355} width={230} height={50} depthInfo={props.depthInfo} className="backToProjects">
                 <Link to={Projects.PATH}>
                     <h3><ThemeSpan>BACK TO </ThemeSpan>PROJECTS</h3>
                 </Link>
             </SectionBox> 
             <SectionBox allowClickWhen3DDisabled noStyle verCenter horCenter zOffset={30} delay={0} x={prevBtnX} y={170} width={120} height={120} depthInfo={props.depthInfo} className="projectTypeArrow typeArrowLeft" onClick={()=>{
-                console.log("wuttt");
                 nextPrev(-1);
             }}>
                 <PushHoverBtn direction={PushHoverBtn.DIRECTION_LEFT}>

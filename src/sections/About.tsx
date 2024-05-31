@@ -56,6 +56,7 @@ const About:SectionFunction = ({ready}:IAboutProps)=>{
         "combos",
     ]
 
+
     const aboutSections = [
         {
             label:"About Me",

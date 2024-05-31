@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap/gsap-core";
 import isMobile from "../util/IsMobile";
 import MathUtil from "../util/MathUtil";
+import BrowserUtil from "../util/BrowserUtil";
 
 type MousePosition = {
     x: number;
@@ -22,14 +23,20 @@ function useMousePosition(): MousePosition {
     useEffect(() => {
 
         let lastEventTime = 0;
-        const throttleMS = 33;
+        let throttleMS = 33;
+        if(BrowserUtil.isSafari){//since we disabled the transitions for safari, let's reduce the throttle
+            throttleMS=0;
+        }
 
         const handleMove = ($event: MouseEvent | TouchEvent) => {
+
 
             if(tweenRef.current){
                 tweenRef.current.kill();
                 tweenRef.current = null;
             }
+
+
 
             const now = Date.now();
             //throttle because it's way too fast otherwise

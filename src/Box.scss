@@ -8,11 +8,15 @@ $boxTransition:all 0.5s ease-in-out;
     transition: $boxTransition;
     transform-style: preserve-3d;
     will-change:transform;
+    -webkit-backface-visibility: hidden; /* Safari */
+    .boxInside{
+        transition: $boxTransition;
+        will-change:opacity;
+    }
     &.disabled3D{
         top:auto;
         left:auto;
         position: relative;
-
     }
     .boxBorder{
         border-style:solid;
@@ -42,7 +46,7 @@ $boxTransition:all 0.5s ease-in-out;
         transition: $boxTransition;
         background-size: 100% 100%;
         z-index:-999;
-        will-change:transform;
+        will-change:transform, opacity;
         opacity:1;
     }
     &.overflowScroll{

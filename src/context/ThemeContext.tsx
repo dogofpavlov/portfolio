@@ -180,11 +180,8 @@ export function ThemeProvider (props: IThemeProviderProps) {
     useEffect(()=>{
         document.documentElement.style.setProperty('--theme-color',theme.themeColor);
         document.documentElement.style.setProperty('--theme-color-hover',theme.themeColor+"33");//"33" = 20% alpha added
-
-        document.documentElement.style.setProperty('--theme-bgcolor', `url('./theme/${theme.id}/color.jpg')`);
+        document.documentElement.style.setProperty('--theme-bgcolor', `url('http://ryancaillouet.com/theme/${theme.id}/color.jpg')`);
         
-
-
         changeScrollbarColor(theme.themeColor);
 
         loadTheme();

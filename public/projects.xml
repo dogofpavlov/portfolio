@@ -4,8 +4,8 @@
 			<project id="safety-shield" name="Safety Shield" latest="true">
 				<client>Intrado</client>
 				<scope>FirstNet certified Mobile Application (iOS/Android) &amp; Web Application.</scope>
-				<tech>HTML, SASS, Typescript, React, Cordova, Swift, JAVA</tech>
-				<desc>A comprehensive safety management platform designed primarily for schools and educational institutions to enhance emergency preparedness and response. My role as lead developer included creating a Website and Mobile application to facilitate.</desc>
+				<tech>HTML, CSS, SASS, Typescript, React, Cordova, Swift, Objective C, JAVA</tech>
+				<desc>A comprehensive safety management platform designed primarily for schools and educational institutions to enhance emergency preparedness and response. My role as the lead front end developer was to create a Web and Mobile application to facilitate all requirements.</desc>
 				<link>https://intradosafe.com</link>
 			</project>
 			<project id="liv" name="Laaser911 Incident Viewer" latest="true">
@@ -14,13 +14,6 @@
 				<tech>HTML, SASS, Typescript, React, Google Maps, Custom React state management.</tech>
 				<desc>A 911 safety management application designed for PSAPs (Public Safety Answering Points) to track in real time 911 emergencies and provide location accurate information for first responders.</desc>
 				<link>https://laaser911.com/liv</link>
-			</project>
-			<project id="prizm5" name="Prizm 5">
-				<client>Primz5</client>
-				<scope>Mobile Application (iOS/Android) &amp; Website</scope>
-				<tech>Actionscript 3, Flash, AIR, Starling, Feathers, ANE, XML, HTML, CSS, Javascript, Photoshop, Illustrator</tech>
-				<desc>A cross-platform mobile application and website built to showcase the Prizm5 classifications for postal codes throughout Canada. PRIZM5 classifies all Canadians into one of 68 lifestyle types—with names like Cosmopolitan Elite, Boomerang City, Rustic Roads and Lunch at Tim's—based on their demographics, marketplace preferences and psychographic Social Values. Using PRIZM5, businesses and not-for-profits can guide their marketing campaigns and media strategies for reaching Canada's consumer segments.</desc>
-				<link>Offline</link>
 			</project>
 			<project id="pfccc" name="PhoneFusion Call Control">
 				<client>PhoneFusion</client>
@@ -36,12 +29,12 @@
 				<desc>A cross-platform mobile application built to handle time tracking, scheduling, messaging &amp; clocking in/out for SBV employees.</desc>
 				<link>Internal Enterprise Solution</link>
 			</project>
-			<project id="act" name="Act Call Control">
-				<client>Act!</client>
-				<scope>Mobile Application (iOS/Android)</scope>
-				<tech>Actionscript 3, AIR, Starling, Feathers, ANE, JSON, XML, Photoshop, Illustrator</tech>
-				<desc>A cross-platform mobile application built for Act to Answer, transfer, expedite, quick reply, and many more options for controlling calls. Send Faxes, SMS, check voicemail, multi-account support. </desc>
-				<link>Internal Enterprise Solution</link>
+			<project id="prizm5" name="Prizm 5">
+				<client>Primz5</client>
+				<scope>Mobile Application (iOS/Android) &amp; Website</scope>
+				<tech>Actionscript 3, Flash, AIR, Starling, Feathers, ANE, XML, HTML, CSS, Javascript, Photoshop, Illustrator</tech>
+				<desc>A cross-platform mobile application and website built to showcase the Prizm5 classifications for postal codes throughout Canada. PRIZM5 classifies all Canadians into one of 68 lifestyle types—with names like Cosmopolitan Elite, Boomerang City, Rustic Roads and Lunch at Tim's—based on their demographics, marketplace preferences and psychographic Social Values. Using PRIZM5, businesses and not-for-profits can guide their marketing campaigns and media strategies for reaching Canada's consumer segments.</desc>
+				<link>Offline</link>
 			</project>
 			<project id="smsstats" name="SMS Stats">
 				<client>PhoneFusion</client>
@@ -50,15 +43,22 @@
 				<desc>A statistical display application created to showcase the accuracy of SMS messages of various platforms. </desc>
 				<link>Offline</link>
 			</project>
-		</projectType>
-		<projectType id="games" label="Games">
-			<project id="syp" name="See You Poker">
-				<client>See You Poker</client>
-				<scope>Desktop Application (Windows/Mac), Mobile Application (iOS/Android)</scope>
-				<tech>Red5 Streaming Video, Actionscript 3, Flash, AIR, Starling, Feathers, ANE, JSON, XML, HTML, CSS, Javascript, PHP, Photoshop, Illustrator. SSO with Facebook.</tech>
-				<desc>A cross-platform moblie/desktop/website game that allows users to play video streaming Texas Holdem Poker.</desc>
+			<project id="cokefifa" name="Coca-Cola Fifa World Cup">
+				<client>Coca-Cola / Fifa </client>
+				<scope>Website, Widgets, Youtube Channel</scope>
+				<tech>HTML, CSS, Javascript, Actionscript 3, Flash, AIR, XML, Photoshop, Illustrator</tech>
+				<desc>A project created for Coca-Cola / Fifa to celebrate the World Cup! It included 5 Interactive iGoogle Widgets, a Website and a Youtube Channel. </desc>
 				<link>Offline</link>
 			</project>
+			<project id="act" name="Act Call Control">
+				<client>Act!</client>
+				<scope>Mobile Application (iOS/Android)</scope>
+				<tech>Actionscript 3, AIR, Starling, Feathers, ANE, JSON, XML, Photoshop, Illustrator</tech>
+				<desc>A cross-platform mobile application built for Act to Answer, transfer, expedite, quick reply, and many more options for controlling calls. Send Faxes, SMS, check voicemail, multi-account support. </desc>
+				<link>Internal Enterprise Solution</link>
+			</project>
+		</projectType>
+		<projectType id="games" label="Games">
 			<project id="can-u-sing" name="Can U Sing">
 				<client>Can U Sing</client>
 				<scope>Desktop Application (Windows/Mac), Mobile Application (iOS/Android)</scope>
@@ -80,6 +80,13 @@
 				<desc>One of the lead developer's for Coca-Cola's Happiness Factory 3. My tasks included creating the overall website, 2 of the 5 games, the 'Theater' section, and making sure everything translated to over 70+ languages (without reloading).</desc>
 				<link>https://thefwa.com/cases/happiness-factory-3</link>
 			</project>
+			<project id="syp" name="See You Poker">
+				<client>See You Poker</client>
+				<scope>Desktop Application (Windows/Mac), Mobile Application (iOS/Android)</scope>
+				<tech>Red5 Streaming Video, Actionscript 3, Flash, AIR, Starling, Feathers, ANE, JSON, XML, HTML, CSS, Javascript, PHP, Photoshop, Illustrator. SSO with Facebook.</tech>
+				<desc>A cross-platform moblie/desktop/website game that allows users to play video streaming Texas Holdem Poker.</desc>
+				<link>Offline</link>
+			</project>
 		</projectType>
 		<projectType id="web" label="Websites">
 			<project id="laaser911" name="Laaser911" latest="true">
@@ -96,6 +103,13 @@
 				<desc>I developed the website for PhoneFusion, a comprehensive telecommunications service provider, to offer users a seamless platform for exploring and managing services such as voicemail, call forwarding, and messaging. My responsibilities included designing a responsive user interface, integrating front-end and back-end services via RESTful APIs, and implementing secure user authentication. I focused on optimizing performance for quick load times and conducted extensive testing to ensure cross-browser compatibility.</desc>
 				<link>https://www.phonefusion.com</link>
 			</project>
+			<project id="ej" name="E-Juice Taster">
+				<client>E-Juice Taster</client>
+				<scope>Mobile Friendly Website</scope>
+				<tech>HTML, CSS, Javascript, Jquery, Wordpress, TweenMax, Photoshop, Illustrator</tech>
+				<desc>A web store built for EJuice Taster to allow users to browse and place orders for samples of vaping flavors from a variety of different brands. </desc>
+				<link>Offline</link>
+			</project>
 			<project id="vendorply" name="Vendorply">
 				<client>Vendorply</client>
 				<scope>Mobile Friendly Website</scope>
@@ -110,20 +124,27 @@
 				<desc>Something should go here.</desc>
 				<link>Offline</link>
 			</project>
+			<project id="ed" name="Eliptic Designs">
+				<client>Myself</client>
+				<scope>Fullscreen Flash Website</scope>
+				<tech>HTML, CSS, Javascript, Flash, Actionscript 3, TweenMax, Photoshop, Illustrator</tech>
+				<desc>This is an old portfolio website that was made during the era when Fullscreen Flash websites were still a thing.</desc>
+				<link>Offline</link>
+			</project>
 		</projectType>
 		<projectType id="other" label="Other">
 			<project id="sauron-holocron" name="Sauron Holocron">
 				<client>Myself</client>
 				<scope>A Sith Holocron for The Dark Lord Sauron!</scope>
 				<tech>3D printing, Arduino to control sound and LED lights.</tech>
-				<desc>A fun mashup of The Lord of the Rings and Star Wars to create a original item.  A fun 3d printing project that combines 3d printing with Arduino/Sound/LED Lights/Rechargable USB batter and has 8 animation modes and can play various audio clips from The Lord of the Rings / The Hobbit.</desc>
+				<desc>A fun mashup of The Lord of the Rings and Star Wars to create a original item.  A fun 3d printing project that combines 3d printing with Arduino, Sound, LED Lights and a rechargable USB battery. It has 2 buttons at the base that can switch between 8 animation modes and can play various audio clips from The Lord of the Rings / The Hobbit.</desc>
 				<link>https://www.youtube.com/watch?v=eRCXtB5M6yg</link>
 			</project>
 			<project id="iron-man-helmet" name="Iron Man Helmet">
 				<client>Myself</client>
 				<scope>A functional replica of Iron Man's helmet design to fit my own head.</scope>
 				<tech>3D printing, Arduino to control sound, servo motors, LED lights. Uses RF or Smart Home implementation to control the helmet.</tech>
-				<desc>A fun project for myself where I scaled and 3d printed an Iron Man helmet to fit my head. It's complete with Sound, LED lights for the eyes and uses servo motors to open/close the faceplate. It can be controlled via buttons or a RF module for handfree control via Smart Home implementation. </desc>
+				<desc>A fun project for myself where I scaled and 3d printed an Iron Man helmet to fit my head. It's complete with Sound, LED lights for the eyes and uses servo motors to open/close the faceplate. It can be controlled with buttons or a RF module for handfree control (via Smart Home integration Google Home). </desc>
 				<link>https://www.youtube.com/watch?v=7ywNrnEcuzg</link>
 			</project>
 			<project id="gimli-axes" name="Gimli Axes">

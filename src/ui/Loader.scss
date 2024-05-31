@@ -15,7 +15,7 @@ $loaderAnimationSpeed:0.2s;
         width: 14px;
         height: 14px;
         border-radius: 50%;
-        background: var(--theme-color);
+        background-color:var(--theme-color);
         background-image:var(--theme-bgcolor);
         background-size: 100% 100%;
         animation-timing-function: cubic-bezier(0, 1, 1, 0);

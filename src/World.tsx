@@ -6,6 +6,7 @@ import PinholeReveal from './ui/PinholeReveal';
 import { StageSizeProvider } from './context/StageSizeContext';
 import useWorldControl from './context/WorldControlContext';
 import useResize from './context/ResizeContext';
+import BrowserUtil from './util/BrowserUtil';
 
 
 export interface IWorldProps extends React.PropsWithChildren{
@@ -38,9 +39,22 @@ export default function World (props: IWorldProps) {
 
     const {theme} = useTheme();
 
+
+
+    let styleTransition:React.CSSProperties = {};
+    let canEaseTransition:boolean=true;
+    if(BrowserUtil.isSafari){//safari is really weird so no transition for you  ¯\_(ツ)_/¯
+        canEaseTransition=false;
+    }
+    if(canEaseTransition){
+        styleTransition.transition = "all 0.5s ease-out";
+    }
+
+
     let stageStyle:React.CSSProperties = {
         top:`${stageTop}%`,
         transform:`rotateX(${rotationX}deg) rotateY(${rotationY}deg)`,
+        ...styleTransition
     }
     let appCN:string = "App";
     
@@ -50,6 +64,7 @@ export default function World (props: IWorldProps) {
     }else{
         appCN+=" can3D";
     }
+
 
     
 
@@ -61,7 +76,8 @@ export default function World (props: IWorldProps) {
                     backgroundPosition:`${skyPositionX}% 0`, 
                     transform:`translate(-50%, 0) rotate(${worldRotation}deg)`,
                     top:`calc(${skyTop}% + 1px)`,
-                    height:`${skyPercent}%`
+                    height:`${skyPercent}%`,
+                    ...styleTransition
                     
                 }}/>
                 <div className="ground" style={{
@@ -69,7 +85,8 @@ export default function World (props: IWorldProps) {
                     transform:`translate(-50%, 0) rotate(${worldRotation}deg)`,
                     top:`${groundTop}%`,
                     backgroundPosition:`${skyPositionX}% 0`, 
-                    height:`${groundPercent}%`
+                    height:`${groundPercent}%`,
+                    ...styleTransition
                 }}/>
                 <div className="stage" style={stageStyle}>
                     {props.children}

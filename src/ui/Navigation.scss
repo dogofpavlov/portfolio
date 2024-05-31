@@ -21,7 +21,7 @@
             background-color:var(--theme-color-hover);
         }
         &.active{
-           // background-color:var(--theme-color);
+            background-color:var(--theme-color);
             background-image:var(--theme-bgcolor);
             background-size: 100% 100%;
             color:#000;
@@ -69,6 +69,7 @@
     z-index:20;
     top:0;
     right:0;
+    background-color:var(--theme-color);
     background-image: var(--theme-bgcolor);
     background-size: 100% 100%;
     display:flex;
