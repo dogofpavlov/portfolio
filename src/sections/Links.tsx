@@ -29,10 +29,10 @@ const Links:SectionFunction = ({ready}:ILinksProps)=>{
             handle:"dogofpavlov"
         },
         {
-            label:"Instagram",
-            url:"https://www.instagram.com/dogofpavlov",
-            icon:"./icon-instagram.png",
-            handle:"dogofpavlov"
+            label:"Linked in",
+            url:"https://www.linkedin.com/in/ryancaillouet",
+            icon:"./icon-linkedin.png",
+            handle:"ryancaillouet"
         },
         {
             label:"Youtube",
@@ -41,13 +41,15 @@ const Links:SectionFunction = ({ready}:ILinksProps)=>{
             handle:"thecyberhobbit"
         },
         {
-            label:"Twitter / X",
-            url:"https://twitter.com/thecyberhobbit",
-            icon:"./icon-twitter.png",
-            handle:"thecyberhobbit"
+            label:"Instagram",
+            url:"https://www.instagram.com/dogofpavlov",
+            icon:"./icon-instagram.png",
+            handle:"dogofpavlov"
         },
     ]
 
+
+    
 
     let gap:number = 30;
     if(resizePoint.value<=1200){
